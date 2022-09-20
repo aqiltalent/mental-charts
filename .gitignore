@@ -6,6 +6,10 @@ images
 videos
 scss
 metadata
+svgs
+less
+img
+js/highcharts.js
 js/all.js
 js/all.min.js
 js/highstock.min.js
