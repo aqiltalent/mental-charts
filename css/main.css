@@ -1,0 +1,1883 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: CalibriBold;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h4,
+h3 {
+  font-family: CalibriBold;
+  padding: 5px;
+  margin: 0px;
+}
+
+@font-face {
+  font-family: OpenSansLight;
+  src: url("../fonts/OpenSans-Light.ttf");
+}
+
+@font-face {
+  font-family: CalibriBold;
+  src: url("../fonts/Calibri-Bold_9055.ttf");
+}
+
+@font-face {
+  font-family: OpenSansBold;
+  src: url("../fonts/OpenSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: OpenSansRegular;
+  src: url("../fonts/OpenSans-Regular.ttf");
+}
+
+.backButton {
+  position: absolute;
+  left: -58px;
+  top: 5px;
+  font-size: 26px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.backButton i {
+  color: white;
+}
+
+.backButton:hover {
+  -webkit-box-shadow: 0px 0px 1px 2px rgba(255, 255, 255, 0.5);
+          box-shadow: 0px 0px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+#ArousalVal {
+  text-align: center;
+  color: white;
+  height: 30px;
+}
+
+#arousalGraph {
+  height: calc(100% - 40px);
+}
+
+.backgroundLogo {
+  position: absolute;
+  right: 25px;
+  top: 105px;
+  z-index: -20;
+  opacity: 0.6;
+}
+
+.Page {
+  max-width: 100vw;
+  min-width: 100vw;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
+  position: absolute;
+}
+
+.Page.hidden {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.introPage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
+
+.introPage .backgroundImage {
+  background-color: #4879af;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  z-index: -10;
+  opacity: 0.8;
+}
+
+.introPage .backgroundLogo {
+  opacity: 1;
+}
+
+.introPage .logo {
+  padding-top: 10px;
+  width: 250px;
+}
+
+.introPage .TrainingOptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+      flex-flow: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.introPage .TrainingOptions .trainOption {
+  width: 190px;
+  height: 100%;
+  border-radius: 5px;
+  margin: 20px;
+  background-color: rgba(65, 203, 199, 0.3);
+  -webkit-backdrop-filter: blur(30px);
+          backdrop-filter: blur(30px);
+  padding: 10px;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.introPage .TrainingOptions .trainOption:hover {
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+}
+
+.introPage .showAllGraphs {
+  width: 120px;
+  height: 100%;
+  border-radius: 5px;
+  margin: 20px;
+  background-color: rgba(65, 203, 199, 0.3);
+  -webkit-backdrop-filter: blur(30px);
+          backdrop-filter: blur(30px);
+  padding: 10px;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.introPage .showAllGraphs:hover {
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+}
+
+#PauseHeartRateButton,
+#HeartRateShowAnimationBtn {
+  display: none;
+}
+
+.ContentPage {
+  position: absolute;
+  max-width: 100vw;
+  min-width: 100vw;
+  display: none;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background: white;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  -webkit-transform: translateY(100vh);
+          transform: translateY(100vh);
+  background-color: #193658;
+}
+
+#arousalShowAnimationBtn {
+  display: none;
+}
+
+.middlebuttonsCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: calc(100% - 160px);
+  -ms-flex-flow: wrap;
+      flex-flow: wrap;
+}
+
+@media (max-width: 900px) {
+  .middlebuttonsCont {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: auto;
+  }
+}
+
+.middlebuttonsCont .middlebuttons {
+  width: 136px;
+  height: 100%;
+  border-radius: 5px;
+  color: black;
+  text-decoration: none;
+  margin: 80px 20px 20px 20px;
+  background-color: rgba(92, 83, 140, 0.4);
+  -webkit-backdrop-filter: blur(30px);
+          backdrop-filter: blur(30px);
+  padding: 10px;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.middlebuttonsCont .middlebuttons:hover {
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15);
+}
+
+@media (max-width: 900px) {
+  .middlebuttonsCont .middlebuttons {
+    margin: 0px;
+  }
+}
+
+.BloodPressureCont {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: calc(100vh - 10px);
+  padding: 5px;
+}
+
+.BloodPressureCont .BloodPressureTitleCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.BloodPressureCont .BloodPressureTitleCont .BloodPressureTitle {
+  color: white;
+  padding: 10px;
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
+}
+
+.BloodPressureCont .BloodPressureTitleCont .BloodPressureTitleButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.BloodPressureCont .BloodPressureTitleCont .BloodPressureTitleButtons #PauseBreatheButton {
+  display: none;
+}
+
+.BloodPressureCont #BalanceHideAnimationBtn {
+  display: none;
+}
+
+.BloodPressureCont .BloodPressureRow1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin: 5px 0px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow1 {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow1 div {
+  margin: 0 5px;
+}
+
+.BloodPressureCont .BloodPressureRow1 .Text {
+  color: white;
+  max-width: 100px;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow1 .Text {
+    max-width: unset;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow1 .BloodPressureLogo img {
+  width: 250px;
+}
+
+.BloodPressureCont .BloodPressureRow1 .BloodPressureSubGraph {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  min-height: 250px;
+}
+
+.BloodPressureCont .BloodPressureRow1 .BloodPressureSubGraph2 {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  min-height: 250px;
+}
+
+.BloodPressureCont .BloodPressureRow1 .videoCont {
+  height: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 40px;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow1 .videoCont {
+    margin-left: 0px;
+    max-height: 250px;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow1 .videoCont .balanceAnimVideo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.BloodPressureCont .BloodPressureRow1 .videoCont .balanceAnimVideo video,
+.BloodPressureCont .BloodPressureRow1 .videoCont .balanceAnimVideo iframe {
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.BloodPressureCont .BloodPressureRow2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: calc(60% - 42px);
+  margin: 5px 0px;
+  padding-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow2 {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow2 div {
+  margin: 0 5px;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 240px;
+  margin-left: 10px;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators {
+    margin: 0 auto;
+    width: calc(100% - 20px);
+  }
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont {
+    padding: 5px;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .valueCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .valueCont.heartcont {
+  color: #ff0000;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .valueCont.lungcont {
+  color: white;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .valueCont .value {
+  font-size: 48px;
+  padding-bottom: 10px;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .iconCont {
+  color: white;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .iconCont .fa-heart {
+  color: #ff0000;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .iconCont .fa-lungs {
+  color: white;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .iconCont i {
+  font-size: 70px;
+}
+
+@media (max-width: 900px) {
+  .BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .signalValues .singleCont .iconCont i {
+    font-size: 30px;
+  }
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .HeartPacerSlider {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0px 20px;
+  width: calc(100% - 40px);
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .HeartPacerSlider .SliderText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: white;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0px 10px;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .HeartPacerSlider .MainSlider {
+  margin: 10px 0px;
+  height: 20px;
+  padding: 0 5px;
+  position: relative;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .HeartPacerSlider .MainSlider .SliderCircle {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  -webkit-transition: 0.25s ease;
+  transition: 0.25s ease;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .HeartPacerSlider .MainSlider .SliderBar {
+  margin: 5px 10px;
+  border-radius: 5px;
+  width: 100%;
+  height: 10px;
+  background-image: -webkit-gradient(linear, left top, right top, from(red), color-stop(blue), to(green));
+  background-image: linear-gradient(to right, red, blue, green);
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureIndicators .HeartPacerSlider .SliderPercent {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.BloodPressureCont .BloodPressureRow2 .BloodPressureMainGraph {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-height: 350px;
+}
+
+.HeartRateCont {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: calc(100vh - 10px);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 5px;
+}
+
+.HeartRateCont .HeartRateheader {
+  padding: 10px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .HeartRateCont .HeartRateheader {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.HeartRateCont .HeartRateheader .heartRateTitleText {
+  color: white;
+  text-align: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.HeartRateCont .HeartRateheader .HeartRateButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .HeartRateCont .HeartRateheader .HeartRateButtons {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+.HeartRateCont .HeartRateBodyCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .HeartRateCont .HeartRateBodyCont {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 {
+  height: auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateUpperCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateUpperCont .Level {
+  padding: 5px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateUpperCont .Level .head {
+  color: white;
+  padding: 5px;
+  background-color: #4472c4;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateUpperCont .Level h6 {
+  text-align: end;
+  color: #63889e;
+  margin: 5px 0px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateUpperCont .Level h1 {
+  color: #f19300;
+  text-align: center;
+  margin: 5px 0px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateUpperCont .HeartRateBarGraph {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  overflow: visible !important;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont {
+  width: 100%;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 200px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .hrvChart {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont .HeartRatePieChart .Text {
+  color: #ffffff;
+  text-align: center;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont .HeartRatePieChart .battery-head {
+  width: 30px;
+  height: 10px;
+  background: #4fa2d2;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  margin: 0 auto;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont .HeartRatePieChart .battery-body {
+  width: 100px;
+  height: 200px;
+  background: #4fa2d2;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  position: relative;
+  margin: 0 auto;
+  border-radius: 18px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont .HeartRatePieChart i.fa-bolt {
+  color: white;
+  font-size: 40px;
+  position: absolute;
+  left: 38%;
+  top: 40%;
+  z-index: 1;
+  -webkit-animation: battery-bolt 2s linear infinite;
+          animation: battery-bolt 2s linear infinite;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont .HeartRatePieChart .charge {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 14px;
+  background: #90ed7d;
+  -webkit-animation: battery-charge 8s linear infinite;
+          animation: battery-charge 8s linear infinite;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 15px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .Text {
+  width: "100%";
+  color: #ffffff;
+  padding: 5px;
+}
+
+@media (max-width: 900px) {
+  .HeartRateCont .HeartRateBodyCont .HeartRateBody2 .Text {
+    max-width: unset;
+  }
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .rate {
+  color: white;
+  padding: 5px;
+  background-color: #4472c4;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerGraph {
+  margin: 5px 0px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerGraph #BreatheSVG #BreathePath {
+  stroke: white;
+  fill: none;
+  stroke-width: 10px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerIndicators {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 5px 0px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerIndicators .HeartRatePacerIndicator {
+  background-color: #00062a;
+  color: white;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 12px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerIndicators .HeartRatePacerIndicator .BreathButton,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerIndicators .HeartRatePacerIndicator .BreatheVal {
+  font-size: 12px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerIndicators .HeartRatePacerIndicator .BreathButton:hover {
+  opacity: 0.5;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 2px 0px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .HeartRatePacerStartButton,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .HeartRatePacerStopButton,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .StopGuidedButton {
+  margin: 0px 10px;
+  background-color: #4472c4;
+  padding: 5px 15px;
+  border-radius: 5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size: 12px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .HeartRatePacerStartButton:hover,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .HeartRatePacerStopButton:hover,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton:hover,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .StopGuidedButton:hover {
+  font-weight: 900;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton .GuidedArrow {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 10px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton .GuidedArrow svg {
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton .GuidedArrow:hover {
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton .GuidedLanguageSelector {
+  position: absolute;
+  background-color: #4472c4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  bottom: -160%;
+  width: 100%;
+  left: 0;
+  display: none;
+  pointer-events: none;
+  -webkit-box-shadow: 1px 1px 0px 1px rgba(0, 107, 139, 0.5);
+          box-shadow: 1px 1px 0px 1px rgba(0, 107, 139, 0.5);
+  z-index: 10;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton .GuidedLanguageSelector div {
+  min-height: 20px;
+  text-align: center;
+  pointer-events: all;
+  padding: 5px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .GuidedButton .GuidedLanguageSelector div:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartRatePacerButtons .StopGuidedButton {
+  display: none;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartPacerSlider {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0px 20px;
+  width: calc(100% - 40px);
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartPacerSlider .SliderText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: white;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0px 10px;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartPacerSlider .MainSlider {
+  margin: 5px 0px;
+  height: 20px;
+  padding: 0 5px;
+  position: relative;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartPacerSlider .MainSlider .SliderCircle {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  -webkit-transition: 0.25s ease;
+  transition: 0.25s ease;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartPacerSlider .MainSlider .SliderBar {
+  margin: 5px 10px;
+  border-radius: 5px;
+  width: 100%;
+  height: 10px;
+  background-image: -webkit-gradient(linear, left top, right top, from(red), color-stop(blue), to(green));
+  background-image: linear-gradient(to right, red, blue, green);
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .HeartPacerSlider .SliderPercent {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont {
+  height: 200px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 40px;
+}
+
+@media (max-width: 900px) {
+  .HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont {
+    margin-left: 0px;
+    max-height: 250px;
+  }
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartrateAnimVideo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartrateAnimVideo video,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartrateAnimVideo iframe {
+  height: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+@media screen and (max-width: 1200px) {
+  .backButton {
+    position: fixed;
+    left: 0;
+  }
+}
+
+.initialAnimation {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+  background: #a5dde9;
+}
+
+.initialAnimation .tap_to_unmute {
+  padding: 10px;
+  margin: 5px;
+  position: absolute;
+  background: rgba(51, 51, 51, 0.5);
+}
+
+.initialAnimation video {
+  width: 100%;
+  height: 100%;
+}
+
+.hrvVideoContainer {
+  display: none;
+}
+
+.TempCont {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: calc(100vh - 10px);
+  padding: 5px;
+}
+
+@media (max-width: 900px) {
+  .TempCont {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.TempCont .graphCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.TempCont .graphCont .TempGraph {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.TempCont .graphCont .TempHeadCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.TempCont .graphCont .TempHeadCont .TempText {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+}
+
+.TempCont .graphCont .TempHeadCont .TempButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.TempCont .graphCont .TempHeadCont .TempButtons #PauseTempButton,
+.TempCont .graphCont .TempHeadCont .TempButtons #TempShowAnimationBtn {
+  display: none;
+}
+
+.TempCont .graphCont .TempIcon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  color: white;
+}
+
+.TempCont .graphCont .TempIcon i {
+  font-size: 38px;
+}
+
+.TempCont .graphCont .TempIcon .tempvalue {
+  font-size: 38px;
+  color: #ff8080;
+  padding-left: 26px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
+}
+
+.TempCont .graphCont .TempIcon #tempChange {
+  font-size: 38px;
+  cursor: pointer;
+}
+
+.TempCont .graphCont .TempIcon #tempChange:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.TempCont .videoCont {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 40px;
+}
+
+@media (max-width: 900px) {
+  .TempCont .videoCont {
+    margin-left: 0px;
+  }
+}
+
+.TempCont .videoCont .TempVideo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .TempCont .videoCont .TempVideo {
+    max-height: 250px;
+  }
+}
+
+.TempCont .videoCont .TempVideo video,
+.TempCont .videoCont .TempVideo iframe {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .TempCont .videoCont .TempVideo video,
+  .TempCont .videoCont .TempVideo iframe {
+    max-height: 250px;
+  }
+}
+
+.TempCont .videoCont .TempVidText {
+  background-color: #4472c4;
+  color: white;
+  padding: 10px;
+  width: 100%;
+}
+
+.HeartRateCont {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.HeartRateCont .HeartRateheader {
+  padding: 15px;
+}
+
+.arousalContainer {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.arousalContainer .arousalHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: white;
+  padding: 5px 0px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .arousalContainer .arousalHeader {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.arousalContainer .arousalHeader .arousalTitle {
+  margin-right: 10px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.arousalContainer .arousalHeader .arousalTitle .arousalText {
+  padding: 0px 9px;
+}
+
+.arousalContainer .arousalHeader .arousalButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .arousalContainer .arousalHeader .arousalButtons {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+.arousalContainer .arousalBodyCont {
+  height: calc(100vh - 94px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .arousalContainer .arousalBodyCont {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin: 0 10px;
+  }
+}
+
+.arousalContainer .arousalBodyCont .arousalBody {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.arousalContainer .arousalBodyCont .videoCont {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 40px;
+}
+
+@media (max-width: 900px) {
+  .arousalContainer .arousalBodyCont .videoCont {
+    margin-left: 0px;
+    max-height: 250px;
+  }
+}
+
+.arousalContainer .arousalBodyCont .videoCont .aurosalAnimVideo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.arousalContainer .arousalBodyCont .videoCont .aurosalAnimVideo video,
+.arousalContainer .arousalBodyCont .videoCont .aurosalAnimVideo iframe {
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.MultiChannelBarGraph {
+  max-height: 220px;
+}
+
+.arousalSinglebutton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0 5px;
+  position: relative;
+}
+
+.arousalSinglebutton .icon {
+  width: 40px;
+  height: 40px;
+  color: white;
+  border-radius: 50%;
+  background-color: #4472c4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.arousalSinglebutton .icon i {
+  font-size: 22px;
+}
+
+.arousalSinglebutton .icon:hover i, .arousalSinglebutton .icon:focus i {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.arousalSinglebutton .text {
+  text-align: center;
+  color: white;
+}
+
+.arousalSinglebutton .audioDropDownArrow {
+  position: absolute;
+  right: 0px;
+  top: 20px;
+}
+
+.arousalSinglebutton .audioDropDownArrow:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.arousalSinglebutton .audioDropDownArrow svg {
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  stroke: white;
+  fill: white;
+}
+
+.arousalSinglebutton .audioDropDownContainer {
+  position: absolute;
+  width: 150px;
+  background-color: #4fa2d2;
+  bottom: -80px;
+  z-index: 10;
+  -webkit-box-shadow: 1px 1px 0px 1px rgba(0, 107, 139, 0.5);
+          box-shadow: 1px 1px 0px 1px rgba(0, 107, 139, 0.5);
+  display: none;
+}
+
+.arousalSinglebutton .audioDropDownContainer div {
+  padding: 5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: white;
+}
+
+.arousalSinglebutton .audioDropDownContainer div:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.AudioFile {
+  position: absolute;
+  left: 0;
+  font-size: 250px;
+  opacity: 0;
+  z-index: 200;
+}
+
+.videoChooserDropDown {
+  width: 100%;
+  position: relative;
+}
+
+.videoChooserDropDown .chosenItem {
+  width: 100%;
+  border: 1px solid #4472c4;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.videoChooserDropDown .chosenItem .chosenItemText {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0px 5px;
+  text-overflow: ellipsis;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.videoChooserDropDown .chosenItem .chosenItemArrow {
+  stroke: white;
+  fill: none;
+  padding: 0px 5px;
+}
+
+.videoChooserDropDown .dropDownContainer {
+  width: 100%;
+  position: absolute;
+  color: white;
+  display: none;
+  border: 1px solid #4472c4;
+  -webkit-box-shadow: 1px 1px 0px 1px rgba(0, 107, 139, 0.5);
+          box-shadow: 1px 1px 0px 1px rgba(0, 107, 139, 0.5);
+  background-color: #4fa2d2;
+  max-height: 70vh;
+  overflow-y: auto;
+  pointer-events: all;
+  z-index: 10;
+}
+
+.videoChooserDropDown .dropDownContainer div {
+  padding: 0px 5px;
+  height: 30px;
+  line-height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+}
+
+.videoChooserDropDown .dropDownContainer div:hover, .videoChooserDropDown .dropDownContainer div:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.videoChooserDropDown .dropDownContainer div input {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  border: 0;
+  pointer-events: none;
+  outline: none;
+  z-index: 100;
+  font-weight: 800;
+}
+
+.videoChooserDropDown .dropDownContainer div .tick {
+  display: none;
+}
+
+.videoChooserDropDown .dropDownContainer div .tick,
+.videoChooserDropDown .dropDownContainer div .gear {
+  padding: 5px;
+  height: calc(100%- 10px);
+  stroke: white;
+  width: 35px;
+}
+
+.videoChooserDropDown .dropDownContainer div .tick:hover, .videoChooserDropDown .dropDownContainer div .tick:focus,
+.videoChooserDropDown .dropDownContainer div .gear:hover,
+.videoChooserDropDown .dropDownContainer div .gear:focus {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.videoChooserDropDown.dropdownVisible .chosenItem .chosenItemArrow {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.videoChooserDropDown.dropdownVisible .dropDownContainer {
+  display: block;
+}
+
+.PlayBtn,
+.PauseBtn,
+.StopBtn,
+.Audio,
+#PauseAurosalButton {
+  display: none;
+}
+
+.highcharts-exporting-group {
+  display: none;
+}
+
+.multichannelCont {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: calc(100vw - 60px);
+}
+
+@media (max-width: 900px) {
+  .multichannelCont {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 0px 30px 0px 30px;
+  }
+}
+
+.multichannelCont .multichannelGraphCont {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+  height: 33vh;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .iconCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 22px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  width: 84px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .iconCont .heart {
+  color: #f00;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .iconCont .temp {
+  color: #ffa500;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .iconCont .drop {
+  color: #a1c696;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .iconCont img {
+  width: 20px;
+}
+
+.multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .graphCont {
+  margin-left: 20px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  overflow: hidden;
+}
+
+@media screen and (max-width: breakpoint-tablet) {
+  .multichannelCont .multichannelGraphCont .multichannelGraphSingleCont .iconCont {
+    font-size: 12px;
+  }
+}
+
+.multichannelCont .multiChannelbreathsCont {
+  margin: auto;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0px 20px;
+  width: calc(100% - 40px);
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .SliderText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: white;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0px 10px;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .MainSlider {
+  margin: 10px 0px;
+  height: 20px;
+  padding: 0 5px;
+  position: relative;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .MainSlider .SliderCircle {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  -webkit-transition: 0.25s ease;
+  transition: 0.25s ease;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .MainSlider .SliderBar {
+  margin: 5px 10px;
+  border-radius: 5px;
+  width: 100%;
+  height: 10px;
+  background-image: -webkit-gradient(linear, left top, right top, from(red), color-stop(blue), to(green));
+  background-image: linear-gradient(to right, red, blue, green);
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .SliderPercent {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 100px;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multiText {
+  color: #ffffff;
+  text-align: center;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multi-battery-head {
+  width: 30px;
+  height: 10px;
+  background: #4fa2d2;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  margin: 0 auto;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multi-battery-body {
+  width: 100px;
+  height: 200px;
+  background: #4fa2d2;
+  border: 2px solid rgba(0, 107, 139, 0.5);
+  position: relative;
+  margin: 0 auto;
+  border-radius: 18px;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont i.fa-bolt {
+  color: white;
+  font-size: 40px;
+  position: absolute;
+  left: 38%;
+  top: 40%;
+  z-index: 1;
+  -webkit-animation: battery-bolt 2s linear infinite;
+          animation: battery-bolt 2s linear infinite;
+}
+
+.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multi-charge {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 14px;
+  background: #90ed7d;
+  -webkit-animation: battery-charge 8s linear infinite;
+          animation: battery-charge 8s linear infinite;
+}
+
+#iframe_id {
+  display: none;
+}
+
+#MultiChannelArousalChart,
+#MultiChannelTempChart,
+#MultiChannelBeatChart {
+  height: calc(100% - 20px);
+  margin: 10px 0px;
+}
+
+.svgConts {
+  padding: 10px;
+}
+
+.svgConts svg {
+  fill: white;
+}
+
+.svgConts svg:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.svgConts svg.shrinker {
+  display: none;
+}
+
+.BloodPressureBarGraph {
+  max-width: 100px;
+  height: 100%;
+}
+
+.heartRatelfdomiValue,
+.multichannelbargraphvalue,
+.BloodPressureBarGraphValue {
+  color: white;
+  text-align: center;
+}
+
+.heartRatelfdomiValue {
+  color: #ffa500;
+}
+/*# sourceMappingURL=main.css.map */
