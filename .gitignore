@@ -1,0 +1,12 @@
+./.vscode/*.*
+./audio/*.*
+./fonts/*.*
+./webfonts/*.*
+./images/*.*
+./videos/*.*
+./scss/*.*
+./metadata/*.*
+./arousal.mp4
+./google97f1f3f45b06d5c5.html
+./json_data.json
+./package-lock.json
