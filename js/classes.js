@@ -111,7 +111,7 @@ class videoDropDown {
             }
             if (dropDownContainer.parentNode.classList.contains("dropdownVisible")) {
                 dropDownContainer.parentNode.classList.remove("dropdownVisible")
-                if (e.target.classList.contains("youtube")) {
+                if (e.target.classList.contains("youtube") || e.target.className === 'youtubeLink') {
                     const url = new URL(e.target.getAttribute("data-src"));
                     const v = url.searchParams.get("v");
                     if (v === "" || v == null) {
@@ -130,7 +130,7 @@ class videoDropDown {
                     iframe.style.display = "none";
                     iframe.contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
                     video.style.display = "block";
-                    video.src = "/videos/" + e.target.getAttribute("data-src");
+                    video.src = "videos/" + e.target.getAttribute("data-src");
                     chosenItemText.innerHTML = e.target.innerHTML;
                 }
                 window.removeEventListener("click", toggleContainer);
@@ -186,23 +186,23 @@ class audioClass {
         })
         const audioDropDownArrow = div.querySelector(".audioDropDownArrow");
         const audioDropDownContainer = div.querySelector(".audioDropDownContainer");
-        const toogleAudioDropDown = function (e) {
+        const toggleAudioDropDown = function (e) {
             if (e.target.classList.contains("dropdownAudio"))
                 return;
             if (audioDropDownContainer.style.display === "block") {
                 audioDropDownArrow.children[0].style.transform = "rotate(0deg)"
                 audioDropDownContainer.style.display = "none";
-                window.removeEventListener("click", toogleAudioDropDown);
+                window.removeEventListener("click", toggleAudioDropDown);
             } else {
                 audioDropDownContainer.style.display = "block";
                 audioDropDownArrow.children[0].style.transform = "rotate(180deg)"
-                window.addEventListener("click", toogleAudioDropDown);
+                window.addEventListener("click", toggleAudioDropDown);
             }
             e.preventDefault();
             e.stopPropagation();
             return false;
         };
-        audioDropDownArrow.addEventListener("click", toogleAudioDropDown);
+        audioDropDownArrow.addEventListener("click", toggleAudioDropDown);
         audioDropDownContainer.addEventListener("click", function(e) {
             if (e.target.classList.contains("dropdownAudio")) {
                 arousalAudio.src = e.target.getAttribute("data-src");

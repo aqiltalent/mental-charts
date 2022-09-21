@@ -43,7 +43,8 @@
 		</h4>
 		
 		<div class="TrainingOptions">
-			<div class="trainOption" id="StartArousalButton">Practice Mental Relaxation
+			<div class="trainOption" id="StartArousalButton">
+				Practice Mental Relaxation
 				<br/> תרגול הרפיה נפשית
 			</div>
 			<div class="trainOption" id="StartHeartRateButton">
@@ -135,7 +136,7 @@
 					</div>
 				</div>
 				<audio class="Audio"></audio>
-				<div class="arousalSinglebutton" id="arousalMinimzeAnimationBtn">
+				<div class="arousalSinglebutton" id="arousalMinimizeAnimationBtn">
 					<div class="icon"><i class="fas fa-video-slash"></i>
 					</div>
 					<div class="text">Hide Animation-<br/> הסתר אנימציה
@@ -161,7 +162,7 @@
 				<div id="arousalGraph"></div>
 			</div>
 			<div class="videoCont">
-				<div class="aurosalAnimVideo">
+				<div class="arousalAnimVideo">
 					<div class="arousalvideoChooserDropDown videoChooserDropDown">
 						<div class="chosenItem">
 							<div class="chosenItemText" id="arousalChosenItemText">Choose Your Animation</div>
@@ -173,9 +174,7 @@
 						</div>
 						<div class="dropDownContainer">
 							<div class="dropdownitems youtube" data-src="https://www.youtube.com/watch?v=vv2BourVYUM">
-								<label>
-									<input class="youtubeLink" value="https://www.youtube.com/watch?v=vv2BourVYUM">
-								</label>
+								<input class="youtubeLink" value="https://www.youtube.com/watch?v=vv2BourVYUM">
 								<img class="gear" src="svgs/gear.svg" alt="">
 								<img class="tick" src="svgs/tick.svg" alt="">
 							</div>
@@ -194,8 +193,8 @@
 							<div class="dropdownitems" data-src="surfing.mp4">surfing</div>
 						</div>
 					</div>
-					<video id="aurosalVideo" src=""></video>
-					<iframe id="aurosalIframe" style="display: none;" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+					<video id="arousalVideo" src=""></video>
+					<iframe id="arousalIframe" style="display: none;" src="https://www.youtube.com/embed/tgbNymZ7vqY">
 					</iframe>
 				</div>
 			</div>
@@ -296,7 +295,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="heartRatelfdomiValue"></div>
+						<div class="heartRateLfDomIValue"></div>
 					</div>
 				</div>
 			</div>
@@ -372,7 +371,7 @@
 					</div>
 				</div>
 				<div class="videoCont hrvVideoContainer">
-					<div class="heartrateAnimVideo">
+					<div class="heartRateAnimVideo">
 						<div class="arousalvideoChooserDropDown videoChooserDropDown">
 							<div class="chosenItem">
 								<div class="chosenItemText">surfing</div>
@@ -384,9 +383,7 @@
 							</div>
 							<div class="dropDownContainer">
 								<div class="dropdownitems youtube" data-src="https://www.youtube.com/watch?v=vv2BourVYUM">
-									<label>
-										<input class="youtubeLink" value="https://www.youtube.com/watch?v=vv2BourVYUM">
-									</label>
+									<input class="youtubeLink" value="https://www.youtube.com/watch?v=vv2BourVYUM">
 									<img class="gear" src="svgs/gear.svg" alt="">
 									<img class="tick" src="svgs/tick.svg" alt="">
 								</div>
@@ -493,7 +490,7 @@
 			</div>
 			<div class="TempIcon">
 				<i class="fas fa-thermometer-three-quarters"></i>
-				<div class="tempvalue" id="temp-value"></div>
+				<div class="tempValue" id="temp-value"></div>
 				<div id="tempChange">F</div>
 			</div>
 			<div class="TempGraph" id="TempGraph"></div>
@@ -513,9 +510,11 @@
 						</div>
 					</div>
 					<div class="dropDownContainer">
-						<div class="dropdownitems youtube" data-src="https://www.youtube.com/watch?v=vv2BourVYUM"><label>
+						<div class="dropdownitems youtube" data-src="https://www.youtube.com/watch?v=vv2BourVYUM">
 							<input class="youtubeLink" value="https://www.youtube.com/watch?v=vv2BourVYUM">
-						</label><img class="gear" src="svgs/gear.svg" alt=""><img class="tick" src="svgs/tick.svg" alt=""></div>
+							<img class="gear" src="svgs/gear.svg" alt="">
+							<img class="tick" src="svgs/tick.svg" alt="">
+						</div>
 						<div class="dropdownitems" data-src="running.mp4">running</div>
 						<div class="dropdownitems" data-src="running dog.mp4">running dog</div>
 						<div class="dropdownitems" data-src="sunrise 1.mp4">sunrise 1</div>
@@ -640,9 +639,11 @@
 							</div>
 						</div>
 						<div class="dropDownContainer">
-							<div class="dropdownitems youtube" data-src="https://www.youtube.com/watch?v=vv2BourVYUM"><label>
+							<div class="dropdownitems youtube" data-src="https://www.youtube.com/watch?v=vv2BourVYUM">
 								<input class="youtubeLink" value="https://www.youtube.com/watch?v=vv2BourVYUM">
-							</label><img class="gear" src="svgs/gear.svg" alt=""><img class="tick" src="svgs/tick.svg" alt=""></div>
+								<img class="gear" src="svgs/gear.svg" alt="">
+								<img class="tick" src="svgs/tick.svg" alt="">
+							</div>
 							
 							<div class="dropdownitems" data-src="running.mp4">running</div>
 							<div class="dropdownitems" data-src="running dog.mp4">running dog</div>
@@ -658,16 +659,14 @@
 							<div class="dropdownitems" data-src="surfing.mp4">surfing</div>
 						</div>
 					</div>
-					<video id="booldPressureVideo" src="videos/surfing.mp4"></video>
-					<iframe id="booldPressureIframe" style="display: none;" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+					<video id="bloodPressureVideo" src="videos/surfing.mp4"></video>
+					<iframe id="bloodPressureIframe" style="display: none;" src="https://www.youtube.com/embed/tgbNymZ7vqY">
 					</iframe>
 				</div>
 			</div>
 		</div>
 		<div class="BloodPressureRow2">
-			<div class="BloodPressureMainGraph" id="BloodPressureMainGraph">
-			
-			</div>
+			<div class="BloodPressureMainGraph" id="BloodPressureMainGraph"></div>
 			<div class="BloodPressureIndicators">
 				<div class="signalValues">
 					<div class="singleCont">
@@ -713,7 +712,7 @@
 			<div class="multichannelGraphSingleCont">
 				<div class="iconCont">
 					<div class="icon"><img src="img/droplet.svg" alt=""></div>
-					<div class="value drop" id="Multiarousalvalue"></div>
+					<div class="value drop" id="multiArousalValue"></div>
 				</div>
 				<div class="graphCont">
 					<div id="MultiChannelArousalChart"></div>
@@ -765,7 +764,7 @@
 						<div class="iconCont"><i class="fas fa-heart"></i></div>
 					
 					</div>
-					<div class="value heart" id="Multibeatvalue"></div>
+					<div class="value heart" id="MultiBeatValue"></div>
 				</div>
 				<div class="graphCont">
 					<div id="MultiChannelBeatChart"></div>
@@ -801,7 +800,7 @@
 						</div>
 					</div>
 					
-					<div class="multichannelbargraphvalue"></div>
+					<div class="multiChannelBarGraphValue"></div>
 				</div>
 				<div class="HeartPacerSlider">
 				</div>

@@ -89,6 +89,17 @@ const noteList = [
 // ];
 
 var Charge = document.querySelector("#charge");
+
+var BalanceSliderCircle = document.querySelector("#BalanceSliderCircle");
+var bloodPressureVideo = document.querySelector("#bloodPressureVideo");
+var bloodPressureIframe = document.querySelector("#bloodPressureIframe");
+var hrvIframe = document.querySelector("#hrvIframe");
+var TempIframe = document.querySelector("#TempIframe");
+var InhaleVal = parseFloat(document.querySelector("#InhaleVal").innerHTML);
+var Hold1Val = parseFloat(document.querySelector("#Hold1Val").innerHTML);
+var ExhaleVal = parseFloat(document.querySelector("#ExhaleVal").innerHTML);
+var Hold2Val = parseFloat(document.querySelector("#Hold2Val").innerHTML);
+
 window.addEventListener("DOMContentLoaded", function () {
   var firstVideo = document.querySelector("#firstVideo");
   var secondVideo = document.querySelector("#secondVideo");
@@ -125,7 +136,7 @@ window.addEventListener("DOMContentLoaded", function () {
   
   var showAllGraphs = document.querySelector("#showAllGraphs");
   showAllGraphs.addEventListener("click", function () {
-    let index = 3;
+    let index = 4;
     curPage = index;
     document.querySelector("[data-pageindex='" + index + "']").style.display =
       "block";
@@ -141,7 +152,7 @@ window.addEventListener("DOMContentLoaded", function () {
       if (!document.querySelector(".Page").classList.contains("hidden")) {
         document.querySelector(".Page").classList += " hidden";
       }
-      if (index === 3) {
+      if (index === 4) {
         curActive = 4;
         time = 0;
         loadMultiChannel();
@@ -178,7 +189,7 @@ window.addEventListener("DOMContentLoaded", function () {
               curActive = 0;
               time = 0;
               loadArousal();
-            } else if (index === 3) {
+            } else if (index === 4) {
               curActive = 4;
               time = 0;
               loadMultiChannel();
@@ -208,8 +219,8 @@ window.addEventListener("DOMContentLoaded", function () {
   }
   window.onpopstate = goback;
   
-  var arousalMinimzeAnimationBtn = document.querySelector(
-    "#arousalMinimzeAnimationBtn"
+  var arousalMinimizeAnimationBtn = document.querySelector(
+    "#arousalMinimizeAnimationBtn"
   );
   var arousalShowAnimationBtn = document.querySelector(
     "#arousalShowAnimationBtn"
@@ -219,22 +230,22 @@ window.addEventListener("DOMContentLoaded", function () {
     .querySelector(".arousalBodyCont")
     .querySelector(".videoCont");
   
-  arousalMinimzeAnimationBtn.addEventListener("click", () => {
+  arousalMinimizeAnimationBtn.addEventListener("click", () => {
     arousalBodyVideoCont.style.display = "none";
-    arousalMinimzeAnimationBtn.style.display = "none";
+    arousalMinimizeAnimationBtn.style.display = "none";
     arousalShowAnimationBtn.style.display = "block";
     if (arousalChart != null)
       arousalChart.setSize(
         arousalGraph.getBoundingClientRect().width,
         arousalGraph.getBoundingClientRect().height,
-        (doAnimation = false)
+        false
       );
   });
-  arousalMinimzeAnimationBtn.click();
+  arousalMinimizeAnimationBtn.click();
   arousalShowAnimationBtn.addEventListener("click", () => {
     arousalBodyVideoCont.style.display = "block";
     arousalShowAnimationBtn.style.display = "none";
-    arousalMinimzeAnimationBtn.style.display = "block";
+    arousalMinimizeAnimationBtn.style.display = "block";
     ArousalChoseItemText.innerHTML = "Choose Your Animation";
     arousalVideo.src = "";
     if (window.innerWidth < 768) {
@@ -242,14 +253,14 @@ window.addEventListener("DOMContentLoaded", function () {
         arousalChart.setSize(
           arousalGraph.getBoundingClientRect().width,
           arousalGraph.getBoundingClientRect().height,
-          (doAnimation = false)
+          false
         );
     } else {
       if (arousalChart != null)
         arousalChart.setSize(
           arousalGraph.getBoundingClientRect().width / 2,
           arousalGraph.getBoundingClientRect().height,
-          (doAnimation = false)
+          false
         );
     }
   });
@@ -275,7 +286,7 @@ window.addEventListener("DOMContentLoaded", function () {
       bloodPressureChart1_2.setSize(
         BloodPressureSubGraph2.getBoundingClientRect().width,
         BloodPressureSubGraph2.getBoundingClientRect().height,
-        (doAnimation = false)
+        false
       );
   });
   BalanceHideAnimationBtn.click();
@@ -287,7 +298,7 @@ window.addEventListener("DOMContentLoaded", function () {
       bloodPressureChart1_2.setSize(
         BloodPressureSubGraph2.getBoundingClientRect().width,
         BloodPressureSubGraph2.getBoundingClientRect().height,
-        (doAnimation = false)
+        false
       );
   });
   
@@ -488,11 +499,7 @@ window.addEventListener("DOMContentLoaded", function () {
   var TempBodyCont = document.querySelector("#TempBodyCont");
   var TempGraph = document.querySelector(".TempGraph");
   var TempVideo = document.querySelector("#TempVideo");
-  var TempIframe = document.querySelector("#TempIframe");
-  var booldPressureVideo = document.querySelector("#booldPressureVideo");
-  var booldPressureIframe = document.querySelector("#booldPressureIframe");
   var hrvVideo = document.querySelector("#hrvVideo");
-  var hrvIframe = document.querySelector("#hrvIframe");
   
   StartTempButton.addEventListener("click", () => {
     TempRunning = true;
@@ -521,14 +528,14 @@ window.addEventListener("DOMContentLoaded", function () {
         tempChart.setSize(
           TempBodyCont.getBoundingClientRect().width,
           TempGraph.getBoundingClientRect().height,
-          (doAnimation = false)
+          false
         );
     } else {
       if (tempChart != null)
         tempChart.setSize(
           TempBodyCont.getBoundingClientRect().width / 2,
           TempGraph.getBoundingClientRect().height,
-          (doAnimation = false)
+          false
         );
     }
     TempShowAnimationBtn.style.display = "none";
@@ -543,7 +550,7 @@ window.addEventListener("DOMContentLoaded", function () {
       tempChart.setSize(
         TempBodyCont.getBoundingClientRect().width,
         TempGraph.getBoundingClientRect().height,
-        (doAnimation = false)
+        false
       );
   });
   TempHideAnimationBtn.click();
@@ -560,9 +567,9 @@ window.addEventListener("DOMContentLoaded", function () {
     BreatheRunning = false;
     StartBreatheButton.style.display = "block";
     PauseBreatheButton.style.display = "none";
-    if (booldPressureVideo.style.display !== "none") booldPressureVideo.pause();
+    if (bloodPressureVideo.style.display !== "none") bloodPressureVideo.pause();
     else
-      booldPressureIframe.contentWindow.postMessage(
+      bloodPressureIframe.contentWindow.postMessage(
         '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
         "*"
       );
@@ -570,8 +577,8 @@ window.addEventListener("DOMContentLoaded", function () {
   
   var tempChange = document.querySelector("#tempChange");
   tempChange.addEventListener("click", () => {
-    isCelcius = !isCelcius;
-    if (isCelcius) {
+    isCelsius = !isCelsius;
+    if (isCelsius) {
       tempChange.innerHTML = "F";
       tempChart.series[0].show();
       tempChart.series[1].hide();
@@ -588,13 +595,13 @@ window.addEventListener("DOMContentLoaded", function () {
   new audioClass(document.querySelector(".BloodPressureTitleButtons"));
   new videoDropDown(document.querySelector(".arousalAnimVideo"));
   new videoDropDown(document.querySelector(".TempVideo"));
-  new videoDropDown(document.querySelector(".heartrateAnimVideo"));
+  new videoDropDown(document.querySelector(".heartRateAnimVideo"));
   new videoDropDown(document.querySelector(".balanceAnimVideo"));
   new GuidedClass(document.querySelector(".HeartRatePacerButtons"));
   //new GuidedClass(document.querySelector("#MultiAudioButton"));
 });
 
-var isCelcius = true;
+var isCelsius = true;
 var initArousal = null;
 var time = 0;
 var breatheData = [];
@@ -604,28 +611,28 @@ var arousalIframe = document.querySelector("#arousalIframe");
 var arousalAnimVideo = document.querySelector(".arousalAnimVideo");
 var RelaxationLevelValue = document.querySelector("#RelaxationLevelValue");
 var TempVideo = document.querySelector("#TempVideo");
-var tempvalue = document.querySelector("#temp-value");
+var tempValue = document.querySelector("#temp-value");
 var BloodPressureBeatsValue = document.querySelector(
   "#BloodPressureBeatsValue"
 );
 var BloodPressureBreathsValue = document.querySelector(
   "#BloodPressureBreathsValue"
 );
-var multitempvalue = document.querySelector("#MultiTempVal");
-var arousalvalue = document.querySelector("#Multiarousalvalue");
-var beatvalue = document.querySelector("#Multibeatvalue");
+var multiTempValue = document.querySelector("#MultiTempVal");
+var arousalValue = document.querySelector("#multiArousalValue");
+var beatValue = document.querySelector("#MultiBeatValue");
 var ArousalVal = document.querySelector("#ArousalVal");
 var SliderPercent = document.querySelector("#SliderPercent");
 var MultiSliderPercent = document.querySelector("#MultiSliderPercent");
+var BalanceSliderPercent = document.querySelector("#BalanceSliderPercent");
 var SliderCircle = document.querySelector("#SliderCircle");
 var MultiSliderCircle = document.querySelector("#MultiSliderCircle");
-var BalanceSliderCircle = document.querySelector("#BalanceSliderCircle");
 var TempVideoCont = document.querySelector(".TempVideo");
 var BalanceVideo = document.querySelector(".BalanceVideo");
 var HeartRateBody2 = document.querySelector(".HeartRateBody2");
-var heartRatelfdomiValue = document.querySelector(".heartRatelfdomiValue");
-var multichannelbargraphvalue = document.querySelector(
-  ".multichannelbargraphvalue"
+var heartRateLfDomIValue = document.querySelector(".heartRateLfDomIValue");
+var multiChannelBarGraphValue = document.querySelector(
+  ".multiChannelBarGraphValue"
 );
 var BloodPressureBarGraphValue = document.querySelector(
   ".BloodPressureBarGraphValue"
@@ -647,7 +654,7 @@ var mindBodyBalanceRewardPoint = 0;
 var setReward = null;
 
 ind = 0;
-lastHandled = false;
+let lastHandled = false;
 var hev_lf_dominantCount = 0;
 var multi_lf_dominantCount = 0;
 var balance_lf_dominantCount = 0;
@@ -831,18 +838,18 @@ function handleMessage(msg) {
       var lfdominant = parseFloat((hrv_lf_dominantCount / (time / 1000)) * 100);
       Charge.style.height = lfdominant + "%";
       mindBodyBalancePoint.innerHTML = mindBodyBalanceRewardPoint;
-      heartRatelfdomiValue.innerHTML = lfdominant.toFixed(1);
+      heartRateLfDomIValue.innerHTML = lfdominant.toFixed(1);
       
-      var lfdivhf = (lf / hf).toFixed(2);
-      RelaxationLevelValue.innerHTML = lfdivhf;
-      if (lfdivhf < 1.5) {
+      var lfDivHf = (lf / hf).toFixed(2);
+      RelaxationLevelValue.innerHTML = lfDivHf;
+      if (lfDivHf < 1.5) {
         SliderPercent.innerHTML = "0%";
         SliderCircle.style.left = "0%";
-      } else if (lfdivhf > 2) {
+      } else if (lfDivHf > 2) {
         SliderPercent.innerHTML = "100%";
         SliderCircle.style.left = "100%";
       } else {
-        var pct = (((lfdivhf - 1.5) / 0.5) * 100).toFixed(2);
+        var pct = (((lfDivHf - 1.5) / 0.5) * 100).toFixed(2);
         SliderPercent.innerHTML = pct + "%";
         SliderCircle.style.left = pct + "%";
       }
@@ -856,10 +863,10 @@ function handleMessage(msg) {
         initTempInCelcius = (initTemp / 100).toFixed(2);
         initTempInFahrenheit = (((initTemp / 100) * 9) / 5 + 32).toFixed(2);
         greatestTempValue = initTemp;
-        if (isCelcius)
-          tempvalue.innerHTML = (val / 100).toFixed(2) + " <sup>o</sup>C";
+        if (isCelsius)
+          tempValue.innerHTML = (val / 100).toFixed(2) + " <sup>o</sup>C";
         else
-          tempvalue.innerHTML =
+          tempValue.innerHTML =
             (((val / 100) * 9) / 5 + 32).toFixed(2) + " <sup>o</sup>F";
         tempChart.series[0].addPoint([time, val / 100], true, false);
       } else {
@@ -887,7 +894,7 @@ function handleMessage(msg) {
               "*"
             );
         }
-        if (isCelcius) {
+        if (isCelsius) {
           var temperatureInCelcius = (val / 100).toFixed(2);
           if (val > greatestTempValue) {
             greatestTempValue = val;
@@ -899,7 +906,7 @@ function handleMessage(msg) {
               0.2
             ).toFixed(0);
           }
-          tempvalue.innerHTML = temperatureInCelcius + " <sup>o</sup>C";
+          tempValue.innerHTML = temperatureInCelcius + " <sup>o</sup>C";
           bodyRelaxationPoint.innerHTML = bodyRelaxationRewardPoint;
         } else {
           var temperatureInFahrenheit = (((val / 100) * 9) / 5 + 32).toFixed(2);
@@ -914,7 +921,7 @@ function handleMessage(msg) {
               0.36
             ).toFixed(0);
           }
-          tempvalue.innerHTML = temperatureInFahrenheit + " <sup>o</sup>F";
+          tempValue.innerHTML = temperatureInFahrenheit + " <sup>o</sup>F";
           bodyRelaxationPoint.innerHTML = bodyRelaxationRewardPoint;
         }
         if (tempChart.series[0].data.length >= itemsCount) {
@@ -948,27 +955,27 @@ function handleMessage(msg) {
       if (initBp == null) initBp = val;
       if (BalanceVideo.getBoundingClientRect().width !== 0) {
         if (initBp > val) {
-          if (booldPressureVideo.style.display !== "none")
-            booldPressureVideo.pause();
+          if (bloodPressureVideo.style.display !== "none")
+            bloodPressureVideo.pause();
           else
-            booldPressureIframe.contentWindow.postMessage(
+            bloodPressureIframe.contentWindow.postMessage(
               '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
               "*"
             );
         } else {
-          if (booldPressureVideo.style.display !== "none")
-            booldPressureVideo.play();
+          if (bloodPressureVideo.style.display !== "none")
+            bloodPressureVideo.play();
           else
-            booldPressureIframe.contentWindow.postMessage(
+            bloodPressureIframe.contentWindow.postMessage(
               '{"event":"command","func":"' + "playVideo" + '","args":""}',
               "*"
             );
         }
       } else {
-        if (booldPressureVideo.style.display !== "none")
-          booldPressureVideo.pause();
+        if (bloodPressureVideo.style.display !== "none")
+          bloodPressureVideo.pause();
         else
-          booldPressureIframe.contentWindow.postMessage(
+          bloodPressureIframe.contentWindow.postMessage(
             '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
             "*"
           );
@@ -1028,33 +1035,33 @@ function handleMessage(msg) {
     BloodPressureBarGraphValue.innerHTML = lfdominant.toFixed(1);
     
     if (data.values[ind].v_p_p_e != null) {
-      var lfdivhf = (
+      var lfDivHf = (
         parseFloat(data.values[ind].l_p_p_e) /
         parseFloat(data.values[ind].h_p_p_e)
       ).toFixed(2);
-      if (lfdivhf < 1.5) {
+      if (lfDivHf < 1.5) {
         BalanceSliderPercent.innerHTML = "0%";
         BalanceSliderCircle.style.left = "0%";
-      } else if (lfdivhf > 2) {
+      } else if (lfDivHf > 2) {
         BalanceSliderPercent.innerHTML = "100%";
         BalanceSliderCircle.style.left = "100%";
       } else {
-        var pct = (((lfdivhf - 1.5) / 0.5) * 100).toFixed(2);
+        var pct = (((lfDivHf - 1.5) / 0.5) * 100).toFixed(2);
         BalanceSliderPercent.innerHTML = pct + "%";
         BalanceSliderCircle.style.left = pct + "%";
       }
     }
     if (breatheData.length > 11) {
       var sorted = asc(breatheData.slice());
-      firstquantile = quantile(sorted, 0.45);
-      thirdquantile = quantile(sorted, 0.55);
+      firstQuantile = quantile(sorted, 0.45);
+      thirdQuantile = quantile(sorted, 0.55);
       upperPart = false;
       var peaks = 0;
       for (var i = 0; i < breatheData.length; i++) {
-        if (breatheData[i] > thirdquantile && !upperPart) {
+        if (breatheData[i] > thirdQuantile && !upperPart) {
           upperPart = true;
           peaks++;
-        } else if (breatheData[i] < firstquantile) {
+        } else if (breatheData[i] < firstQuantile) {
           upperPart = false;
         }
       }
@@ -1067,21 +1074,21 @@ function handleMessage(msg) {
   } else if (curActive === 4) {
     if (data.values[ind].tmp != null) {
       var val = parseInt(data.values[ind].tmp);
-      multitempvalue.innerHTML = (val / 100).toFixed(1);
+      multiTempValue.innerHTML = (val / 100).toFixed(1);
       if (multiTempChart.series[0].data.length >= itemsCount)
         multiTempChart.series[0].addPoint([time, val / 100], true, true);
       else multiTempChart.series[0].addPoint([time, val / 100], true, false);
     }
     if (data.values[ind].gs != null) {
       var val = parseInt(data.values[ind].gs);
-      arousalvalue.innerHTML = (val / 100).toFixed(1);
+      arousalValue.innerHTML = (val / 100).toFixed(1);
       if (multiArousalChart.series[0].data.length >= itemsCount)
         multiArousalChart.series[0].addPoint([time, val / 100], true, true);
       else multiArousalChart.series[0].addPoint([time, val / 100], true, false);
     }
     if (data.values[ind].hr != null) {
       var val = parseInt(data.values[ind].hr) * 100;
-      beatvalue.innerHTML = (val / 100).toFixed(1);
+      beatValue.innerHTML = (val / 100).toFixed(1);
       if (multiBeatChart.series[0].data.length >= itemsCount)
         multiBeatChart.series[0].addPoint([time, val / 100], true, true);
       else multiBeatChart.series[0].addPoint([time, val / 100], true, false);
@@ -1107,7 +1114,7 @@ function handleMessage(msg) {
     //   false,
     //   false
     // );
-    multichannelbargraphvalue.innerHTML = lfdominant.toFixed(1);
+    multiChannelBarGraphValue.innerHTML = lfdominant.toFixed(1);
     time += 1000;
   }
 }
@@ -1123,10 +1130,10 @@ function renderBreathePath() {
   curBreatheTotalTime = InhaleVal + Hold1Val + Hold2Val + ExhaleVal;
   changeBreathePerMinute();
   var lineWidthDivBy2 = 10;
-  var svgheight = 150;
+  var svgHeight = 150;
   
   var svgWidth = HeartRatePacerGraph.getBoundingClientRect().width;
-  BreatheSVG.setAttribute("height", svgheight);
+  BreatheSVG.setAttribute("height", svgHeight);
   BreatheSVG.setAttribute("width", svgWidth);
   
   var breatheDivByWidth =
@@ -1135,7 +1142,7 @@ function renderBreathePath() {
     "M" +
     lineWidthDivBy2 +
     " " +
-    (svgheight - lineWidthDivBy2) +
+    (svgHeight - lineWidthDivBy2) +
     " L" +
     (breatheDivByWidth * InhaleVal + lineWidthDivBy2) +
     " " +
@@ -1147,12 +1154,12 @@ function renderBreathePath() {
     " L" +
     breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal) +
     " " +
-    (svgheight - lineWidthDivBy2) +
+    (svgHeight - lineWidthDivBy2) +
     " " +
     "L" +
     breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal + Hold2Val) +
     " " +
-    (svgheight - lineWidthDivBy2);
+    (svgHeight - lineWidthDivBy2);
   BreathePath.setAttribute("d", path);
   curBreatheTime = 0;
   
@@ -1160,18 +1167,19 @@ function renderBreathePath() {
 }
 
 function renderMultiBreathePath() {
+  console.log('hey hey');
   var HeartRatePacerGraph = document.querySelector("#multiChannelPacerGraph");
   var BreatheSVG = document.querySelector("#multiChannelBreatheSVG");
   var BreathePath = document.querySelector("#multiChannelBreathePath");
   curMultiBreatheTotalTime = InhaleVal + Hold1Val + Hold2Val + ExhaleVal;
   changeBreathePerMinute();
   var lineWidthDivBy2 = 10;
-  var svgheight = 130;
+  var svgHeight = 130;
 }
 
 function renderMultiBreatheCircle() {
   var curBreatheCircle = document.querySelector(
-    "#multiChannelcurBreatheCircle"
+    "#multiChannelCurBreatheCircle"
   );
   var HeartRatePacerGraph = document.querySelector("#multiChannelPacerGraph");
   var BreatheSVG = document.querySelector("#multiChannelBreatheSVG");
@@ -1185,7 +1193,7 @@ function renderMultiBreatheCircle() {
   var Hold2Val = parseFloat(document.querySelector("#MultiHold2Val").innerHTML);
   
   var lineWidthDivBy2 = 10;
-  var svgheight = 130;
+  var svgHeight = 130;
   
   var svgWidth = HeartRatePacerGraph.getBoundingClientRect().width;
   
@@ -1201,7 +1209,7 @@ function renderMultiBreatheCircle() {
       "cy",
       lineWidthDivBy2 +
       (1 - curMultiBreatheTime / InhaleVal) *
-      (svgheight - lineWidthDivBy2 * 2)
+      (svgHeight - lineWidthDivBy2 * 2)
     );
   } else if (curMultiBreatheTime < InhaleVal + Hold1Val) {
     curBreatheCircle.setAttribute(
@@ -1221,7 +1229,7 @@ function renderMultiBreatheCircle() {
       "cy",
       lineWidthDivBy2 +
       ((curMultiBreatheTime - InhaleVal - Hold1Val) / ExhaleVal) *
-      (svgheight - lineWidthDivBy2 * 2)
+      (svgHeight - lineWidthDivBy2 * 2)
     );
   } else {
     curBreatheCircle.setAttribute(
@@ -1230,7 +1238,7 @@ function renderMultiBreatheCircle() {
       (curMultiBreatheTime - InhaleVal - ExhaleVal - Hold1Val) *
       breatheDivByWidth
     );
-    curBreatheCircle.setAttribute("cy", svgheight - lineWidthDivBy2);
+    curBreatheCircle.setAttribute("cy", svgHeight - lineWidthDivBy2);
   }
 }
 
@@ -1243,13 +1251,9 @@ function renderBreatheCircle() {
   var curBreatheCircle = document.querySelector("#curBreatheCircle");
   var HeartRatePacerGraph = document.querySelector("#HeartRatePacerGraph");
   var BreatheSVG = document.querySelector("#BreatheSVG");
-  var InhaleVal = parseFloat(document.querySelector("#InhaleVal").innerHTML);
-  var Hold1Val = parseFloat(document.querySelector("#Hold1Val").innerHTML);
-  var ExhaleVal = parseFloat(document.querySelector("#ExhaleVal").innerHTML);
-  var Hold2Val = parseFloat(document.querySelector("#Hold2Val").innerHTML);
   
   var lineWidthDivBy2 = 10;
-  var svgheight = 150;
+  var svgHeight = 150;
   
   var svgWidth = HeartRatePacerGraph.getBoundingClientRect().width;
   
@@ -1264,7 +1268,7 @@ function renderBreatheCircle() {
     curBreatheCircle.setAttribute(
       "cy",
       lineWidthDivBy2 +
-      (1 - curBreatheTime / InhaleVal) * (svgheight - lineWidthDivBy2 * 2)
+      (1 - curBreatheTime / InhaleVal) * (svgHeight - lineWidthDivBy2 * 2)
     );
   } else if (curBreatheTime < InhaleVal + Hold1Val) {
     curBreatheCircle.setAttribute(
@@ -1284,7 +1288,7 @@ function renderBreatheCircle() {
       "cy",
       lineWidthDivBy2 +
       ((curBreatheTime - InhaleVal - Hold1Val) / ExhaleVal) *
-      (svgheight - lineWidthDivBy2 * 2)
+      (svgHeight - lineWidthDivBy2 * 2)
     );
   } else {
     curBreatheCircle.setAttribute(
@@ -1292,7 +1296,7 @@ function renderBreatheCircle() {
       breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal) +
       (curBreatheTime - InhaleVal - ExhaleVal - Hold1Val) * breatheDivByWidth
     );
-    curBreatheCircle.setAttribute("cy", svgheight - lineWidthDivBy2);
+    curBreatheCircle.setAttribute("cy", svgHeight - lineWidthDivBy2);
   }
 }
 
@@ -2188,7 +2192,7 @@ function goback() {
       '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
       "*"
     );
-  } else if (curPage === 4) {
+  } else if (curPage === 3) {
     clearInterval(bloodPressureInterval1);
     clearInterval(bloodPressureInterval2);
     document
@@ -2205,7 +2209,7 @@ function goback() {
       '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
       "*"
     );
-  } else if (curPage === 3) {
+  } else if (curPage === 4) {
   }
 }
 
@@ -2252,7 +2256,7 @@ function expand(e) {
       multiArousalChart.setSize(
         parent.getBoundingClientRect().width,
         parent.getBoundingClientRect().height - 20,
-        (doAnimation = false)
+        false
       );
   } else if (
     e.parentNode.parentNode.querySelector("#MultiChannelTempChart") != null
@@ -2261,7 +2265,7 @@ function expand(e) {
       multiTempChart.setSize(
         parent.getBoundingClientRect().width,
         parent.getBoundingClientRect().height - 20,
-        (doAnimation = false)
+        false
       );
   } else if (
     e.parentNode.parentNode.querySelector("#MultiChannelBeatChart") != null
@@ -2270,7 +2274,7 @@ function expand(e) {
       multiBeatChart.setSize(
         parent.getBoundingClientRect().width,
         parent.getBoundingClientRect().height - 20,
-        (doAnimation = false)
+        false
       );
   }
 }
@@ -2290,19 +2294,19 @@ function shrink(e) {
     multiArousalChart.setSize(
       parent.getBoundingClientRect().width - 20,
       parent.getBoundingClientRect().height - 20,
-      (doAnimation = false)
+      false
     );
   if (multiTempChart != null)
     multiTempChart.setSize(
       parent.getBoundingClientRect().width - 20,
       parent.getBoundingClientRect().height - 20,
-      (doAnimation = false)
+      false
     );
   if (multiBeatChart != null)
     multiBeatChart.setSize(
       parent.getBoundingClientRect().width - 20,
       parent.getBoundingClientRect().height - 20,
-      (doAnimation = false)
+      false
     );
 }
 

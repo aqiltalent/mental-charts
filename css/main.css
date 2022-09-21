@@ -1047,7 +1047,7 @@ h3 {
   }
 }
 
-.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartrateAnimVideo {
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartRateAnimVideo {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1059,8 +1059,8 @@ h3 {
           flex-direction: column;
 }
 
-.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartrateAnimVideo video,
-.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartrateAnimVideo iframe {
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartRateAnimVideo video,
+.HeartRateCont .HeartRateBodyCont .HeartRateBody2 .videoCont .heartRateAnimVideo iframe {
   height: 100%;
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -1179,7 +1179,7 @@ h3 {
   font-size: 38px;
 }
 
-.TempCont .graphCont .TempIcon .tempvalue {
+.TempCont .graphCont .TempIcon .tempValue {
   font-size: 38px;
   color: #ff8080;
   padding-left: 26px;
@@ -1870,14 +1870,14 @@ h3 {
   height: 100%;
 }
 
-.heartRatelfdomiValue,
-.multichannelbargraphvalue,
+.heartRateLfDomIValue,
+.multiChannelBarGraphValue,
 .BloodPressureBarGraphValue {
   color: white;
   text-align: center;
 }
 
-.heartRatelfdomiValue {
+.heartRateLfDomIValue {
   color: #ffa500;
 }
 /*# sourceMappingURL=main.css.map */
