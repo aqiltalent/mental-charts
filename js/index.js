@@ -1,11 +1,10 @@
 var curPage = -1;
-var AurosalRunning = false;
+var ArousalRunning = false;
 var HeartRateRunning = false;
 var TempRunning = false;
 var BreatheRunning = false;
 var curBreatheTime = 0;
 var curMultiBreatheTime = 0;
-var curMultiBreatheLastTime = null;
 var curBreatheLastTime = null;
 var curBreatheTotalTime = 0;
 var curMultiBreatheTotalTime = 0;
@@ -16,16 +15,13 @@ var TempInterval = null;
 var bloodPressureInterval1 = null;
 var bloodPressureInterval2 = null;
 var breathingInterval = null;
-var MultibreathingInterval = null;
 var iframeReloadInterval = null;
 var iframeLoaded = false;
-var lastReadMessage = 0;
 var curActive = -1;
 var arousalChart = null;
 var mentalRelaxationRewardPoint = 0;
 var isSoundEnable = false;
 var isSoundTriggered = true;
-var isNotePositionTriggered = true;
 var notePosition;
 var previousArousalValue = null;
 var isPreviousArousalValueReplaced = false;
@@ -107,8 +103,8 @@ window.addEventListener("DOMContentLoaded", function () {
   secondVideo.addEventListener("ended", function () {
     initialAnimation.style.display = "none";
   });
-  var backbuttons = document.querySelectorAll(".backButton");
-  backbuttons.forEach((element) => {
+  var backButtons = document.querySelectorAll(".backButton");
+  backButtons.forEach((element) => {
     element.addEventListener("click", goback);
   });
   initialAnimation.addEventListener("click", function () {
@@ -129,7 +125,7 @@ window.addEventListener("DOMContentLoaded", function () {
   
   var showAllGraphs = document.querySelector("#showAllGraphs");
   showAllGraphs.addEventListener("click", function () {
-    index = 3;
+    let index = 3;
     curPage = index;
     document.querySelector("[data-pageindex='" + index + "']").style.display =
       "block";
@@ -240,7 +236,7 @@ window.addEventListener("DOMContentLoaded", function () {
     arousalShowAnimationBtn.style.display = "none";
     arousalMinimzeAnimationBtn.style.display = "block";
     ArousalChoseItemText.innerHTML = "Choose Your Animation";
-    aurosalVideo.src = "";
+    arousalVideo.src = "";
     if (window.innerWidth < 768) {
       if (arousalChart != null)
         arousalChart.setSize(
@@ -296,40 +292,40 @@ window.addEventListener("DOMContentLoaded", function () {
   });
   
   var ArousalChoseItemText = document.querySelector("#arousalChosenItemText");
-  // var PauseAurosalButton = document.querySelector("#PauseAurosalButton");
-  var StartAurosalButton = document.querySelector("#StartAurosalButton");
-  // PauseAurosalButton.addEventListener("click", () => {
-  //     AurosalRunning = false
-  //     document.querySelector("#aurosalVideo").pause()
-  //     StartAurosalButton.style.display = "block"
-  //     PauseAurosalButton.style.display = "none"
+  // var PauseArousalButton = document.querySelector("#PauseArousalButton");
+  var StartArousalButton = document.querySelector("#StartArousalButton");
+  // PauseArousalButton.addEventListener("click", () => {
+  //     ArousalRunning = false
+  //     document.querySelector("#arousalVideo").pause()
+  //     StartArousalButton.style.display = "block"
+  //     PauseArousalButton.style.display = "none"
   
   // })
-  StartAurosalButton.addEventListener("click", () => {
-    AurosalRunning = true;
-    // PauseAurosalButton.style.display = "block"
-    // StartAurosalButton.style.display = "none"
+  StartArousalButton.addEventListener("click", () => {
+    ArousalRunning = true;
+    // PauseArousalButton.style.display = "block"
+    // StartArousalButton.style.display = "none"
   });
   
-  var StartAurosalSoundButton = document.querySelector(
-    "#StartAurosalSoundButton"
+  var StartArousalSoundButton = document.querySelector(
+    "#StartArousalSoundButton"
   );
-  var PauseAurosalSoundButton = document.querySelector(
-    "#PauseAurosalSoundButton"
+  var PauseArousalSoundButton = document.querySelector(
+    "#PauseArousalSoundButton"
   );
   
-  StartAurosalSoundButton.addEventListener("click", () => {
+  StartArousalSoundButton.addEventListener("click", () => {
     isSoundEnable = true;
     // const synth = new Tone.Synth().toDestination();
     // synth.triggerAttackRelease(noteList[notePosition], "8n");
-    PauseAurosalSoundButton.style.display = "block";
-    StartAurosalSoundButton.style.display = "none";
+    PauseArousalSoundButton.style.display = "block";
+    StartArousalSoundButton.style.display = "none";
   });
   
-  PauseAurosalSoundButton.addEventListener("click", () => {
+  PauseArousalSoundButton.addEventListener("click", () => {
     isSoundEnable = false;
-    StartAurosalSoundButton.style.display = "block";
-    PauseAurosalSoundButton.style.display = "none";
+    StartArousalSoundButton.style.display = "block";
+    PauseArousalSoundButton.style.display = "none";
   });
   
   var IncInhaleBtn = document.querySelector("#IncInhaleBtn");
@@ -590,7 +586,7 @@ window.addEventListener("DOMContentLoaded", function () {
   new audioClass(document.querySelector(".HeartRateButtons"));
   new audioClass(document.querySelector(".TempHeadCont"));
   new audioClass(document.querySelector(".BloodPressureTitleButtons"));
-  new videoDropDown(document.querySelector(".aurosalAnimVideo"));
+  new videoDropDown(document.querySelector(".arousalAnimVideo"));
   new videoDropDown(document.querySelector(".TempVideo"));
   new videoDropDown(document.querySelector(".heartrateAnimVideo"));
   new videoDropDown(document.querySelector(".balanceAnimVideo"));
@@ -603,12 +599,12 @@ var initArousal = null;
 var time = 0;
 var breatheData = [];
 var itemsCount = 1500;
-var aurosalVideo = document.querySelector("#aurosalVideo");
-var aurosalIframe = document.querySelector("#aurosalIframe");
-var aurosalAnimVideo = document.querySelector(".aurosalAnimVideo");
+var arousalVideo = document.querySelector("#arousalVideo");
+var arousalIframe = document.querySelector("#arousalIframe");
+var arousalAnimVideo = document.querySelector(".arousalAnimVideo");
 var RelaxationLevelValue = document.querySelector("#RelaxationLevelValue");
 var TempVideo = document.querySelector("#TempVideo");
-var tempvalue = document.querySelector("#tempvalue");
+var tempvalue = document.querySelector("#temp-value");
 var BloodPressureBeatsValue = document.querySelector(
   "#BloodPressureBeatsValue"
 );
@@ -656,9 +652,7 @@ var hev_lf_dominantCount = 0;
 var multi_lf_dominantCount = 0;
 var balance_lf_dominantCount = 0;
 
-var multiChannelBatteryGraph = document.querySelector(
-  "#multiChannelBatteryGraph"
-);
+var multiChannelBatteryGraph = document.querySelector("#multiChannelBatteryGraph");
 
 function handleMessage(msg) {
   if (curActive === -1) return;
@@ -672,7 +666,7 @@ function handleMessage(msg) {
   
   lastHandled = true;
   iframeLoaded = true;
-  if (curActive === 0 && AurosalRunning) {
+  if (curActive === 0 && ArousalRunning) {
     if (data.values[ind].gs != null) {
       var val = parseInt(data.values[ind].gs);
       if (initArousal == null) {
@@ -680,26 +674,26 @@ function handleMessage(msg) {
         notePosition = 21;
         time = 0;
       } else {
-        if (aurosalAnimVideo.getBoundingClientRect().width !== 0) {
+        if (arousalAnimVideo.getBoundingClientRect().width !== 0) {
           if (initArousal > val) {
-            if (aurosalVideo.style.display !== "none") aurosalVideo.play();
+            if (arousalVideo.style.display !== "none") arousalVideo.play();
             else
-              aurosalIframe.contentWindow.postMessage(
+              arousalIframe.contentWindow.postMessage(
                 '{"event":"command","func":"' + "playVideo" + '","args":""}',
                 "*"
               );
           } else {
-            if (aurosalVideo.style.display !== "none") aurosalVideo.pause();
+            if (arousalVideo.style.display !== "none") arousalVideo.pause();
             else
-              aurosalIframe.contentWindow.postMessage(
+              arousalIframe.contentWindow.postMessage(
                 '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
                 "*"
               );
           }
         } else {
-          if (aurosalVideo.style.display !== "none") aurosalVideo.pause();
+          if (arousalVideo.style.display !== "none") arousalVideo.pause();
           else
-            aurosalIframe.contentWindow.postMessage(
+            arousalIframe.contentWindow.postMessage(
               '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
               "*"
             );
@@ -1583,7 +1577,6 @@ function loadHRV() {
   });
   if (hrvBar != null) return;
   hrvBar = Highcharts.chart("HeartRateBarGraph", {
-    legend: {enabled: false},
     title: {
       text: "",
     },
@@ -1661,7 +1654,7 @@ function loadHRV() {
       },
     ],
   });
-  if (HeartRatePieChart != null) return;
+  // if (HeartRatePieChart != null)
   
   // HeartRatePieChart = Highcharts.chart("HeartRatePieChart", {
   //   chart: {
@@ -2021,7 +2014,6 @@ function loadMultiChannel() {
     ],
   });
   multiBeatChart = Highcharts.chart("MultiChannelBeatChart", {
-    legend: {enabled: false},
     title: {
       text: "Beat",
       style: {
@@ -2092,7 +2084,7 @@ function loadMultiChannel() {
       },
     ],
   });
-  if (multiChannelBar != null) return;
+  // if (multiChannelBar != null) return;
   // multiChannelBatteryGraph.style.height = 100 + "%";
   // multiChannelBar = Highcharts.chart("MultiChannelBarGraph", {
   //   chart: {
