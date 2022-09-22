@@ -74,8 +74,6 @@ const hrvVideoContainer = _el('.hrvVideoContainer');
 const hrvVideo = _el('#hrvVideo');
 const hrvIframe = _el('#hrvIframe');
 
-let arousalRewardPoint = null;
-let setReward = null;
 let initArousal = null;
 let breathingInterval = null;
 let arousalChart = null;
@@ -90,6 +88,7 @@ let bloodPressureChart2 = null;
 let multiArousalChart = null;
 let multiTempChart = null;
 let multiBeatChart = null;
+let multiBVPChart = null;
 
 let initTemp = null;
 let initHr = null;
@@ -173,8 +172,8 @@ function emitSound() {
     return;
   }
   isSoundTriggered = false;
-  // const synth = new Tone.Synth().toDestination();
-  // synth.triggerAttackRelease(noteList[notePosition], "4n");
+  const synth = new Tone.Synth().toDestination();
+  synth.triggerAttackRelease(noteList[notePosition], "4n");
   setTimeout(() => {
     isSoundTriggered = true;
   }, 500);
@@ -220,6 +219,10 @@ function handleMessage(msg) {
   
   lastHandled = true;
   iframeLoaded = true;
+  if (currActive === 1) {
+    hrv_lf_dominantCount = 0;
+    mindBodyBalanceRewardPoint = 0;
+  }
   for (let v = 0; v < data.values.length; v++) {
     switch (currActive) {
       case 0:
@@ -233,16 +236,22 @@ function handleMessage(msg) {
           notePosition = 21;
           aTime = 0;
         } else {
-          if (arousalVideo.style.display !== 'none') arousalVideo.pause();
-          else
+          const isPlaying = arousalVideo.currentTime > 0 && !arousalVideo.paused && !arousalVideo.ended
+            && arousalVideo.readyState > arousalVideo.HAVE_CURRENT_DATA;
+          
+          if (arousalVideo.style.display !== 'none') {
+            if (isPlaying) arousalVideo.pause();
+          } else
             arousalIframe.contentWindow.postMessage(
               '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
               "*"
             );
           
-          if (arousalAnimVideo.getBoundingClientRect().width !== 0 && initArousal > val) {
-            if (arousalVideo.style.display !== 'none') arousalVideo.play();
-            else
+          if (arousalAnimVideo.getBoundingClientRect().width !== 0 && initArousal < val) {
+            if (arousalVideo.style.display !== 'none') {
+              if (!isPlaying) arousalVideo.play().then(() => {
+              });
+            } else
               arousalIframe.contentWindow.postMessage(
                 '{"event":"command","func":"' + "playVideo" + '","args":""}',
                 "*"
@@ -272,17 +281,7 @@ function handleMessage(msg) {
         _el('#ArousalVal').innerHTML = 'AROUSAL LEVEL = ' + val;
         
         if (initArousal > val) {
-          if (arousalRewardPoint === null) {
-            arousalRewardPoint = setTimeout(() => {
-              mentalRelaxationRewardPoint += 0.5;
-              arousalRewardPoint = null;
-            }, 1000);
-          }
-        } else {
-          if (arousalRewardPoint !== null && initArousal < val) {
-            clearTimeout(arousalRewardPoint);
-            arousalRewardPoint = null;
-          }
+          mentalRelaxationRewardPoint += 0.5;
         }
         
         if (isSoundEnable) {
@@ -313,16 +312,22 @@ function handleMessage(msg) {
           bTime += 200;
   
           if (initHr == null) initHr = val1;
-          if (hrvVideoContainer.style.display !== 'none') hrvVideo.pause();
-          else
+          const isPlaying = hrvVideo.currentTime > 0 && !hrvVideo.paused && !hrvVideo.ended
+            && hrvVideo.readyState > hrvVideo.HAVE_CURRENT_DATA;
+  
+          if (hrvVideoContainer.style.display !== 'none') {
+            if (isPlaying) hrvVideo.pause();
+          } else
             hrvIframe.contentWindow.postMessage(
               '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
               "*"
             );
-          
-          if (_el('.HeartRateBody2').getBoundingClientRect().width !== 0 && initHr <= val1) {
-            if (hrvVideoContainer.style.display !== 'none') hrvVideo.play();
-            else
+  
+          if (_el('.HeartRateBody2').getBoundingClientRect().width !== 0 && initHr < val1) {
+            if (hrvVideoContainer.style.display !== 'none') {
+              if (!isPlaying) hrvVideo.play().then(() => {
+              });
+            } else
               hrvIframe.contentWindow.postMessage(
                 '{"event":"command","func":"' + "playVideo" + '","args":""}',
                 "*"
@@ -341,17 +346,7 @@ function handleMessage(msg) {
         
         if (lf > hf && lf > vlf) {
           hrv_lf_dominantCount++;
-          if (setReward == null) {
-            setReward = setTimeout(() => {
-              mindBodyBalanceRewardPoint++;
-              setReward = null;
-            }, 10000);
-          }
-        }
-        
-        if (setReward !== null && (lf < hf || lf < vlf)) {
-          clearTimeout(setReward);
-          setReward = null;
+          mindBodyBalanceRewardPoint++;
         }
         
         hrvBar.series[0].update({
@@ -370,25 +365,27 @@ function handleMessage(msg) {
             },
           ],
         });
-        
-        const lfDominant = Math.round((hrv_lf_dominantCount / (bTime / 1000)) * 1000) / 10;
+  
+        const lfDominant = Math.round((hrv_lf_dominantCount / (bTime / 200)) * 200) / 10;
         _el('#charge').style.height = (lfDominant > 100 ? 100 : lfDominant) + "%";
         _el('#mindBodyBalancePoint').innerHTML = mindBodyBalanceRewardPoint;
         _el('.heartRateLfDomIValue').innerHTML = lfDominant.toFixed(1);
   
-        const lfDivHf = (lf / hf).toFixed(2);
+        const lfDivHf = hf !== 0 ? ((lf / hf) * 5).toFixed(2) : 0;
         _el('#RelaxationLevelValue').innerHTML = lfDivHf;
-        if (lfDivHf < 1.5) {
-          sliderPercent.innerHTML = '0%';
-          sliderCircle.style.left = '0%';
-        } else if (lfDivHf > 2) {
-          sliderPercent.innerHTML = '100%';
-          sliderCircle.style.left = '100%';
-        } else {
-          const pct = (((lfDivHf - 1.5) / 0.5) * 100).toFixed(2);
-          sliderPercent.innerHTML = pct + '%';
-          sliderCircle.style.left = pct + '%';
-        }
+        sliderPercent.innerHTML = lfDivHf + '%';
+        sliderCircle.style.left = lfDivHf + '%';
+        // if (lfDivHf < 1.5) {
+        //   sliderPercent.innerHTML = '0%';
+        //   sliderCircle.style.left = '0%';
+        // } else if (lfDivHf > 2) {
+        //   sliderPercent.innerHTML = '100%';
+        //   sliderCircle.style.left = '100%';
+        // } else {
+        //   const pct = (((lfDivHf - 1.5) / 0.5) * 100).toFixed(2);
+        //   sliderPercent.innerHTML = pct + '%';
+        //   sliderCircle.style.left = pct + '%';
+        // }
         break;
       
       case 2:
@@ -409,22 +406,28 @@ function handleMessage(msg) {
             tempValue.innerHTML = (((val3 / 100) * 9) / 5 + 32).toFixed(2) + ' <sup>o</sup>F';
           tempChart.series[0].addPoint([cTime, val3 / 100], true, false);
         } else {
-          if (tempVideo.style.display !== "none") tempVideo.pause();
-          else
+          const isPlaying = tempVideo.currentTime > 0 && !tempVideo.paused && !tempVideo.ended
+            && tempVideo.readyState > tempVideo.HAVE_CURRENT_DATA;
+  
+          if (tempVideo.style.display !== "none") {
+            if (isPlaying) tempVideo.pause();
+          } else
             tempIframe.contentWindow.postMessage(
               '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
               "*"
             );
   
-          if (_el('.TempVideo').getBoundingClientRect().width !== 0 && initTemp <= val3) {
-            if (tempVideo.style.display !== "none") tempVideo.play();
-            else
+          if (_el('.TempVideo').getBoundingClientRect().width !== 0 && initTemp < val3) {
+            if (tempVideo.style.display !== "none") {
+              if (!isPlaying) tempVideo.play().then(() => {
+              });
+            } else
               tempIframe.contentWindow.postMessage(
                 '{"event":"command","func":"' + "playVideo" + '","args":""}',
                 "*"
               );
           }
-    
+  
           if (isCelsius) {
             if (val3 > greatestTempValue) {
               greatestTempValue = val3;
@@ -441,7 +444,7 @@ function handleMessage(msg) {
             tempValue.innerHTML = (((val3 / 100) * 9) / 5 + 32).toFixed(2) + " <sup>o</sup>F";
             bodyRelaxationPoint.innerHTML = bodyRelaxationRewardPoint;
           }
-    
+  
           if (tempChart.series[0].data.length >= itemsCount) {
             tempChart.series[0].addPoint([cTime, val3 / 100], true, true);
             tempChart.series[1].addPoint([cTime, ((val3 / 100) * 9) / 5 + 32], true, true);
@@ -451,6 +454,22 @@ function handleMessage(msg) {
           }
         }
   
+        if (initTemp < val3) {
+          tempChart.series[0].update({
+            color: '#ffa500'
+          });
+          tempChart.series[1].update({
+            color: '#ffa500'
+          });
+        } else {
+          tempChart.series[0].update({
+            color: '#ff0000'
+          });
+          tempChart.series[1].update({
+            color: '#ff0000'
+          });
+        }
+  
         if (temporaryTemperatureValue < val3) {
           previousTemperatureValue = val3;
         }
@@ -458,6 +477,7 @@ function handleMessage(msg) {
   
         cTime += 200;
         break;
+      
       case 3:
         const val4 = parseInt(data.values[v].tmp);
         if (!isNaN(val4)) {
@@ -483,16 +503,24 @@ function handleMessage(msg) {
           else multiBeatChart.series[0].addPoint([dTime[2], (val6 / 100)], true, false);
         }
     
+        const val7 = parseInt(data.values[v].hr) * 100;
+        if (!isNaN(val7)) {
+          _el('#multiBVPValue').innerHTML = (val7 / 100).toFixed(1);
+          if (multiBVPChart.series[0].data.length >= itemsCount)
+            multiBVPChart.series[0].addPoint([dTime[2], (val7 / 100)], true, true);
+          else multiBVPChart.series[0].addPoint([dTime[2], (val7 / 100)], true, false);
+        }
+        
         if (data.values[v].v_p_p_e !== null) {
           if (parseFloat(data.values[v].l_p_p_e) > parseFloat(data.values[v].h_p_p_e)
             && data.values[v].l_p_p_e > parseFloat(data.values[v].v_p_p_e)
           ) multi_lf_dominantCount++;
         }
-    
-        const lfDominant1 = Math.round((multi_lf_dominantCount / (dTime[2] / 1000)) * 1000) / 10;
+        
+        const lfDominant1 = Math.round((multi_lf_dominantCount / (dTime[2] / 200)) * 200) / 10;
         _el('#multiChannelBatteryGraph').style.height = (lfDominant1 > 100 ? 100 : lfDominant1) + "%";
         _el('.multiChannelBarGraphValue').innerHTML = lfDominant1.toFixed(1);
-    
+        
         dTime[0] += 200;
         dTime[1] += 200;
         dTime[2] += 200;
@@ -521,10 +549,26 @@ function goBack() {
   }
   
   if (currPage !== 3) {
-    document
+    const videoEl = document
       .querySelector("[data-pageindex='" + currPage + "']")
-      .querySelector('video')
-      .pause();
+      .querySelector('video');
+  
+    const audioEl = document
+      .querySelector("[data-pageindex='" + currPage + "']")
+      .querySelector('audio');
+  
+    const isPlaying = videoEl.currentTime > 0 && !videoEl.paused && !videoEl.ended
+      && videoEl.readyState > videoEl.HAVE_CURRENT_DATA;
+  
+    const isPlaying1 = audioEl.currentTime > 0 && !audioEl.paused && !audioEl.ended
+      && audioEl.readyState > audioEl.HAVE_CURRENT_DATA;
+  
+    if (isPlaying) videoEl.pause();
+    videoEl.currentTime = 0;
+  
+    if (isPlaying1) audioEl.pause();
+    audioEl.currentTime = 0;
+  
     document
       .querySelector("[data-pageindex='" + currPage + "']")
       .querySelector('iframe')
@@ -532,11 +576,25 @@ function goBack() {
       '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
       "*"
     );
-    document
-      .querySelector("[data-pageindex='" + currPage + "']")
-      .querySelector('video')
-      .currentTime = 0;
   }
+  
+  document.querySelector('#TempHideAnimationBtn').click();
+  document.querySelector('#HeartRateHideAnimationBtn').click();
+  document.querySelector('#arousalMinimizeAnimationBtn').click();
+  document.querySelector('#BalanceHideAnimationBtn').click();
+  document.querySelector('.arousalButtons').querySelector('.PauseBtn').click();
+  document.querySelector('.arousalButtons').querySelector('.StopBtn').click();
+  document.querySelector('.arousalButtons').querySelector('.PlayBtn').style.display = 'none';
+  document.querySelector('.HeartRateButtons').querySelector('.PauseBtn').click();
+  document.querySelector('.HeartRateButtons').querySelector('.StopBtn').click();
+  document.querySelector('.HeartRateButtons').querySelector('.PlayBtn').style.display = 'none';
+  document.querySelector('.TempHeadCont').querySelector('.PauseBtn').click();
+  document.querySelector('.TempHeadCont').querySelector('.StopBtn').click();
+  document.querySelector('.TempHeadCont').querySelector('.PlayBtn').style.display = 'none';
+  document.querySelector('.BloodPressureTitleButtons').querySelector('.PauseBtn').click();
+  document.querySelector('.BloodPressureTitleButtons').querySelector('.StopBtn').click();
+  document.querySelector('.BloodPressureTitleButtons').querySelector('.PlayBtn').style.display = 'none';
+  document.querySelector('.AudioFile').value = 'none';
   
   if (currPage === 0) {
     arousalRunning = false;
@@ -874,7 +932,7 @@ function loadHRV() {
           {
             name: 'HF%',
             y: 0,
-            color: '#434348',
+            color: '#b026ff',
             pointWidth: 30,
           },
         ],
@@ -956,7 +1014,7 @@ function loadTemp() {
         name: 'Farenheit',
         data: [],
         visible: false,
-        color: '#ff8080',
+        color: '#ffa500',
         type: 'spline',
       },
     ],
@@ -1052,7 +1110,7 @@ function loadBloodPressure() {
       },
     },
     title: {
-      text: 'Blood preassure-לחץ דם',
+      text: 'Blood preassure - לחץ דם',
       style: {
         color: '#ffffff',
       },
@@ -1318,7 +1376,7 @@ function loadMultiChannel() {
   
   multiBeatChart = window.Highcharts.chart('MultiChannelBeatChart', {
     title: {
-      text: 'Beat',
+      text: 'Heart Rate',
       style: {
         color: '#ffffff',
       },
@@ -1379,10 +1437,97 @@ function loadMultiChannel() {
     series: [
       {
         data: [],
-        color: '#ff0000',
+        color: '#ffa500',
         marker: {
           enabled: false,
         },
+        type: 'spline',
+      },
+    ],
+  });
+  
+  multiBVPChart = window.Highcharts.chart('MultiChannelBVPChart', {
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    title: {
+      text: 'BVP',
+      style: {
+        color: '#ffffff',
+      },
+    },
+    yAxis: [
+      {
+        labels: {
+          style: {
+            color: '#FF0000',
+          },
+        },
+        title: {
+          text: '',
+        },
+        gridLineColor: '#FFF3',
+      },
+      {
+        labels: {
+          style: {
+            color: '#ffffff',
+          },
+        },
+        title: {
+          text: '',
+        },
+        gridLineColor: '#FFF3',
+      },
+    ],
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    tooltip: {
+      enabled: false,
+      valueDecimals: 0,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        name: 'Heart Rates per minute',
+        color: "#ff0000",
+        data: [],
+        type: "spline",
+      },
+      {
+        name: 'Breaths per minute',
+        color: '#ffffff',
+        data: [],
+        yAxis: 1,
         type: 'spline',
       },
     ],
@@ -1463,15 +1608,22 @@ function expand(e) {
         false
       );
   } else if (e.parentNode.parentNode.querySelector('#MultiChannelTempChart') !== null) {
-    if (multiArousalChart !== null)
+    if (multiTempChart !== null)
       multiTempChart.setSize(
         parent.getBoundingClientRect().width,
         parent.getBoundingClientRect().height - 20,
         false
       );
   } else if (e.parentNode.parentNode.querySelector('#MultiChannelBeatChart') !== null) {
-    if (multiArousalChart !== null)
+    if (multiBeatChart !== null)
       multiBeatChart.setSize(
+        parent.getBoundingClientRect().width,
+        parent.getBoundingClientRect().height - 20,
+        false
+      );
+  } else if (e.parentNode.parentNode.querySelector('#MultiChannelBVPChart') !== null) {
+    if (multiBVPChart !== null)
+      multiBVPChart.setSize(
         parent.getBoundingClientRect().width,
         parent.getBoundingClientRect().height - 20,
         false
@@ -1508,6 +1660,12 @@ function shrink(e) {
       parent.getBoundingClientRect().height - 20,
       false
     );
+  if (multiBVPChart !== null)
+    multiBVPChart.setSize(
+      parent.getBoundingClientRect().width - 20,
+      parent.getBoundingClientRect().height - 20,
+      false
+    );
 }
 
 function mentalGymInit() {
@@ -1516,10 +1674,18 @@ function mentalGymInit() {
   const initialAnimation = _el('.initialAnimation');
   const tap_to_unmute = _el('.tap_to_unmute');
   
-  firstVideo.play();
+  const isPlaying = firstVideo.currentTime > 0 && !firstVideo.paused && !firstVideo.ended
+    && firstVideo.readyState > firstVideo.HAVE_CURRENT_DATA;
+  
+  if (!isPlaying) firstVideo.play().then(() => {
+  });
   firstVideo.addEventListener('ended', () => {
     firstVideo.style.display = 'none';
-    secondVideo.play();
+    
+    const isPlaying1 = secondVideo.currentTime > 0 && !secondVideo.paused && !secondVideo.ended
+      && secondVideo.readyState > secondVideo.HAVE_CURRENT_DATA;
+    if (!isPlaying1) secondVideo.play().then(() => {
+    });
     initialAnimation.style.backgroundColor = '#d3def4';
   });
   

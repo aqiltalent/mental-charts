@@ -38,7 +38,6 @@ h3 {
 
 .backButton {
   position: absolute;
-  left: -58px;
   top: 5px;
   font-size: 26px;
   border-radius: 50%;
@@ -613,7 +612,6 @@ h3 {
 
 .HeartRateCont {
   position: relative;
-  max-width: 1200px;
   margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -623,7 +621,7 @@ h3 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 5px;
+  padding: 5px 35px;
 }
 
 .HeartRateCont .HeartRateheader {
@@ -748,15 +746,15 @@ h3 {
 }
 
 .HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .hrvChart {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
 }
 
 .HeartRateCont .HeartRateBodyCont .HeartRateBody1 .HeartRateLowerCont .batteryCont {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-box-flex: 0;
+      -ms-flex: 0;
+          flex: 0;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -1253,7 +1251,6 @@ h3 {
 }
 
 .HeartRateCont {
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -1598,7 +1595,6 @@ h3 {
 
 .multichannelCont {
   position: relative;
-  max-width: 1200px;
   margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1612,19 +1608,18 @@ h3 {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    padding: 0px 30px 0px 30px;
+    padding: 0 30px 0 30px;
   }
 }
 
 .multichannelCont .multichannelGraphCont {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1694,6 +1689,7 @@ h3 {
 
 .multichannelCont .multiChannelBreathsCont {
   margin: auto;
+  min-width: 100px;
 }
 
 .multichannelCont .multiChannelBreathsCont .pacerButtons {

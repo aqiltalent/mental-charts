@@ -30,18 +30,30 @@ class GuidedClass {
         })
         GuidedLanguageSelector.addEventListener("click", function(e) {
             if (e.target.classList.contains("Herbrew")) {
-                GuidedButton.setAttribute("data-lang", "Herbrew")
-                if (playing) {
+                GuidedButton.setAttribute("data-lang", "Herbrew");
+                const isPlaying = HerbrewAudio.currentTime > 0 && !HerbrewAudio.paused && !HerbrewAudio.ended
+                  && HerbrewAudio.readyState > HerbrewAudio.HAVE_CURRENT_DATA;
+                
+                if (isPlaying) {
                     HerbrewAudio.pause();
                     HerbrewAudio.currentTime = 0;
-                    HerbrewEnglishAudio.play().then(r => {});
+    
+                    const isPlaying1 = HerbrewEnglishAudio.currentTime > 0 && !HerbrewEnglishAudio.paused && !HerbrewEnglishAudio.ended
+                      && HerbrewEnglishAudio.readyState > HerbrewEnglishAudio.HAVE_CURRENT_DATA;
+                    if (!isPlaying1) HerbrewEnglishAudio.play().then(r => {});
                 }
             } else if (e.target.classList.contains("English")) {
                 GuidedButton.setAttribute("data-lang", "English")
-                if (playing) {
+                const isPlaying = HerbrewEnglishAudio.currentTime > 0 && !HerbrewEnglishAudio.paused && !HerbrewEnglishAudio.ended
+                  && HerbrewEnglishAudio.readyState > HerbrewEnglishAudio.HAVE_CURRENT_DATA;
+                
+                if (isPlaying) {
                     HerbrewEnglishAudio.pause();
                     HerbrewEnglishAudio.currentTime = 0;
-                    HerbrewAudio.play().then(r => {});
+    
+                    const isPlaying1 = HerbrewAudio.currentTime > 0 && !HerbrewAudio.paused && !HerbrewAudio.ended
+                      && HerbrewAudio.readyState > HerbrewAudio.HAVE_CURRENT_DATA;
+                    if (!isPlaying1) HerbrewAudio.play().then(r => {});
                 }
             }
             GuidedLanguageSelector.style.display = "none";
@@ -54,11 +66,19 @@ class GuidedClass {
             StopGuidedButton.style.display = "flex";
             GuidedButton.style.display = "none";
             if (lang === "English") {
-                HerbrewEnglishAudio.play().then(r => {});
-                playing = true;
+                const isPlaying = HerbrewEnglishAudio.currentTime > 0 && !HerbrewEnglishAudio.paused && !HerbrewEnglishAudio.ended
+                  && HerbrewEnglishAudio.readyState > HerbrewEnglishAudio.HAVE_CURRENT_DATA;
+                
+                if (!isPlaying) HerbrewEnglishAudio.play().then(() => {
+                    playing = true;
+                });
             } else if (lang === "Herbrew") {
-                HerbrewAudio.play().then(r => {});
-                playing = true;
+                const isPlaying = HerbrewAudio.currentTime > 0 && !HerbrewAudio.paused && !HerbrewAudio.ended
+                  && HerbrewAudio.readyState > HerbrewAudio.HAVE_CURRENT_DATA;
+    
+                if (!isPlaying) HerbrewAudio.play().then(() => {
+                    playing = true;
+                });
             }
         })
         StopGuidedButton.addEventListener("click", function() {
@@ -66,11 +86,17 @@ class GuidedClass {
             GuidedButton.style.display = "flex";
             const lang = GuidedButton.getAttribute("data-lang");
             if (lang === "English") {
-                HerbrewEnglishAudio.pause();
+                const isPlaying = HerbrewEnglishAudio.currentTime > 0 && !HerbrewEnglishAudio.paused && !HerbrewEnglishAudio.ended
+                  && HerbrewEnglishAudio.readyState > HerbrewEnglishAudio.HAVE_CURRENT_DATA;
+    
+                if (isPlaying) HerbrewEnglishAudio.pause();
                 HerbrewEnglishAudio.currentTime = 0;
                 playing = false;
             } else if (lang === "Herbrew") {
-                HerbrewAudio.pause();
+                const isPlaying = HerbrewAudio.currentTime > 0 && !HerbrewAudio.paused && !HerbrewAudio.ended
+                  && HerbrewAudio.readyState > HerbrewAudio.HAVE_CURRENT_DATA;
+    
+                if (isPlaying) HerbrewAudio.pause();
                 HerbrewAudio.currentTime = 0;
                 playing = false;
             }
@@ -167,22 +193,40 @@ class audioClass {
             arousalPlayBtn.click();
         })
         arousalPlayBtn.addEventListener("click", () => {
-            arousalAudio.play().then(() => {
-                arousalAudio.muted = false;
-            });
+            const isPlaying = arousalAudio.currentTime > 0 && !arousalAudio.paused && !arousalAudio.ended
+              && arousalAudio.readyState > arousalAudio.HAVE_CURRENT_DATA;
+    
+            if (!isPlaying) {
+                arousalAudio.play().then(() => {
+                    arousalAudio.muted = false;
+                });
+            }
             arousalPlayBtn.style.display = "none";
             arousalPauseBtn.style.display = "block";
             arousalStopBtn.style.display = "block";
             arousalAddAudioBtn.style.display = "none";
         })
         arousalPauseBtn.addEventListener("click", () => {
-            arousalAudio.pause();
+            const isPlaying = arousalAudio.currentTime > 0 && !arousalAudio.paused && !arousalAudio.ended
+              && arousalAudio.readyState > arousalAudio.HAVE_CURRENT_DATA;
+    
+            if (isPlaying) {
+                arousalAudio.pause();
+                arousalAudio.muted = true;
+            }
+            
             arousalPauseBtn.style.display = "none";
             arousalPlayBtn.style.display = "block";
         })
         arousalStopBtn.addEventListener("click", () => {
-            arousalAudio.pause();
-            arousalAudio.currentTime = 0
+            const isPlaying = arousalAudio.currentTime > 0 && !arousalAudio.paused && !arousalAudio.ended
+              && arousalAudio.readyState > arousalAudio.HAVE_CURRENT_DATA;
+    
+            if (isPlaying) {
+                arousalAudio.pause();
+                arousalAudio.muted = true;
+                arousalAudio.currentTime = 0;
+            }
             arousalPauseBtn.style.display = "none";
             arousalPlayBtn.style.display = "block";
             arousalStopBtn.style.display = "none";
@@ -218,7 +262,6 @@ class audioClass {
             }
         })
     }
-
 }
 
 function setCookie(c_name, value, exdays) {
