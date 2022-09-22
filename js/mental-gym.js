@@ -13,11 +13,8 @@ let mentalRelaxationRewardPoint = 0;
 
 let aTime = 0;
 let bTime = 0;
-let bPreVal = 0;
 let cTime = 0;
-let cPreVal = 0;
 let dTime = [0, 0, 0];
-let dPreVal = [0, 0, 0];
 
 let bodyRelaxationRewardPoint = 0;
 let previousTemperatureValue = 0;
@@ -159,6 +156,7 @@ function setPageHidden() {
       break;
     case 3:
       dTime = [0, 0, 0];
+      multi_lf_dominantCount = 0;
       loadMultiChannel();
       renderMultiBreathePath();
       break;
@@ -373,8 +371,8 @@ function handleMessage(msg) {
           ],
         });
         
-        const lfDominant = (hrv_lf_dominantCount / (bTime / 1000)) * 100;
-        _el('#charge').style.height = lfDominant + "%";
+        const lfDominant = Math.round((hrv_lf_dominantCount / (bTime / 1000)) * 1000) / 10;
+        _el('#charge').style.height = (lfDominant > 100 ? 100 : lfDominant) + "%";
         _el('#mindBodyBalancePoint').innerHTML = mindBodyBalanceRewardPoint;
         _el('.heartRateLfDomIValue').innerHTML = lfDominant.toFixed(1);
   
@@ -417,8 +415,8 @@ function handleMessage(msg) {
               '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
               "*"
             );
-    
-          if (_el('.TempVideo').getBoundingClientRect().width !== 0 && initTemp <= val) {
+  
+          if (_el('.TempVideo').getBoundingClientRect().width !== 0 && initTemp <= val3) {
             if (tempVideo.style.display !== "none") tempVideo.play();
             else
               tempIframe.contentWindow.postMessage(
@@ -452,16 +450,49 @@ function handleMessage(msg) {
             tempChart.series[1].addPoint([cTime, ((val3 / 100) * 9) / 5 + 32], true, false);
           }
         }
-        
+  
         if (temporaryTemperatureValue < val3) {
           previousTemperatureValue = val3;
         }
         temporaryTemperatureValue = val3;
-        
+  
         cTime += 200;
         break;
       case 3:
-        
+        const val4 = parseInt(data.values[v].tmp);
+        if (!isNaN(val4)) {
+          _el('#MultiTempVal').innerHTML = (val4 / 100).toFixed(1);
+          if (multiTempChart.series[0].data.length >= itemsCount)
+            multiTempChart.series[0].addPoint([dTime[0], (val4 / 100)], true, true);
+          else multiTempChart.series[0].addPoint([dTime[0], (val4 / 100)], true, false);
+        }
+    
+        const val5 = parseInt(data.values[v].gs);
+        if (!isNaN(val5)) {
+          _el('#multiArousalValue').innerHTML = (val5 / 100).toFixed(1);
+          if (multiArousalChart.series[0].data.length >= itemsCount)
+            multiArousalChart.series[0].addPoint([dTime[1], (val5 / 100)], true, true);
+          else multiArousalChart.series[0].addPoint([dTime[1], (val5 / 100)], true, false);
+        }
+    
+        const val6 = parseInt(data.values[v].hr) * 100;
+        if (!isNaN(val6)) {
+          _el('#MultiBeatValue').innerHTML = (val6 / 100).toFixed(1);
+          if (multiBeatChart.series[0].data.length >= itemsCount)
+            multiBeatChart.series[0].addPoint([dTime[2], (val6 / 100)], true, true);
+          else multiBeatChart.series[0].addPoint([dTime[2], (val6 / 100)], true, false);
+        }
+    
+        if (data.values[v].v_p_p_e !== null) {
+          if (parseFloat(data.values[v].l_p_p_e) > parseFloat(data.values[v].h_p_p_e)
+            && data.values[v].l_p_p_e > parseFloat(data.values[v].v_p_p_e)
+          ) multi_lf_dominantCount++;
+        }
+    
+        const lfDominant1 = Math.round((multi_lf_dominantCount / (dTime[2] / 1000)) * 1000) / 10;
+        _el('#multiChannelBatteryGraph').style.height = (lfDominant1 > 100 ? 100 : lfDominant1) + "%";
+        _el('.multiChannelBarGraphValue').innerHTML = lfDominant1.toFixed(1);
+    
         dTime[0] += 200;
         dTime[1] += 200;
         dTime[2] += 200;
@@ -482,19 +513,12 @@ function goBack() {
     return;
   }
   
-  document
-    .querySelector("[data-pageindex='" + currPage + "']").style.transform = 'translateY(100vh)';
+  document.querySelector("[data-pageindex='" + currPage + "']").style.transform = 'translateY(100vh)';
+  document.querySelector("[data-pageindex='" + currPage + "']").style.display = 'none';
   
-  setTimeout(() => {
-    document
-      .querySelector("[data-pageindex='" + currPage + "']").style.display = 'none';
-    if (_el('.Page').classList.contains('hidden')) {
-      document
-        .querySelector('.Page')
-        .classList
-        .remove('hidden');
-    }
-  }, 500);
+  if (document.querySelector('.Page').classList.contains('hidden')) {
+    document.querySelector('.Page').classList.remove('hidden');
+  }
   
   if (currPage !== 3) {
     document
@@ -614,47 +638,809 @@ function loadArousal() {
   });
 }
 
-/**
- * load hrv chart
- */
-function loadHRV() {
+function renderBreatheCircle() {
+  const curBreatheCircle = _el('#curBreatheCircle');
+  const lineWidthDivBy2 = 10;
+  const svgHeight = 150;
+  const InhaleVal = parseFloat(_el('#InhaleVal').innerHTML);
+  const Hold1Val = parseFloat(_el('#Hold1Val').innerHTML);
+  const ExhaleVal = parseFloat(_el('#ExhaleVal').innerHTML);
+  const Hold2Val = parseFloat(_el('#Hold2Val').innerHTML);
+  
+  const svgWidth = _el('#HeartRatePacerGraph').getBoundingClientRect().width;
+  
+  const breatheDivByWidth = (svgWidth - lineWidthDivBy2 * 2) / curBreatheTotalTime;
+  
+  if (curBreatheTime < InhaleVal) {
+    curBreatheCircle.setAttribute('cx', lineWidthDivBy2 + curBreatheTime * breatheDivByWidth);
+    curBreatheCircle.setAttribute(
+      'cy',
+      lineWidthDivBy2 + (1 - curBreatheTime / InhaleVal) * (svgHeight - lineWidthDivBy2 * 2)
+    );
+  } else if (curBreatheTime < InhaleVal + Hold1Val) {
+    curBreatheCircle.setAttribute(
+      'cx',
+      lineWidthDivBy2 + breatheDivByWidth * InhaleVal + (curBreatheTime - InhaleVal) * breatheDivByWidth
+    );
+    curBreatheCircle.setAttribute('cy', lineWidthDivBy2);
+  } else if (curBreatheTime < InhaleVal + Hold1Val + ExhaleVal) {
+    curBreatheCircle.setAttribute(
+      'cx',
+      breatheDivByWidth * (InhaleVal + Hold1Val) + (curBreatheTime - InhaleVal - Hold1Val) * breatheDivByWidth
+    );
+    curBreatheCircle.setAttribute(
+      'cy',
+      lineWidthDivBy2 + ((curBreatheTime - InhaleVal - Hold1Val) / ExhaleVal) * (svgHeight - lineWidthDivBy2 * 2)
+    );
+  } else {
+    curBreatheCircle.setAttribute(
+      'cx',
+      breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal) + (curBreatheTime - InhaleVal - ExhaleVal - Hold1Val) * breatheDivByWidth
+    );
+    curBreatheCircle.setAttribute('cy', svgHeight - lineWidthDivBy2);
+  }
+}
+
+function changeBreathePerMinute() {
+  _el("#breatherate").innerHTML =
+    "Pacer rate=" + 60 / curBreatheTotalTime + " breaths per minute";
 }
 
 /**
  * render breathe path
  */
 function renderBreathePath() {
+  calcBreatheTotalTime();
+  changeBreathePerMinute();
+  const lineWidthDivBy2 = 10;
+  const svgHeight = 150;
+  
+  const svgWidth = _el('#HeartRatePacerGraph').getBoundingClientRect().width;
+  _el('#BreatheSVG').setAttribute("height", 150);
+  _el('#BreatheSVG').setAttribute("width", svgWidth);
+  
+  const InhaleVal = parseFloat(_el('#InhaleVal').innerHTML);
+  const Hold1Val = parseFloat(_el('#Hold1Val').innerHTML);
+  const ExhaleVal = parseFloat(_el('#ExhaleVal').innerHTML);
+  const Hold2Val = parseFloat(_el('#Hold2Val').innerHTML);
+  
+  const breatheDivByWidth =
+    (svgWidth - lineWidthDivBy2 * 2) / curBreatheTotalTime;
+  const path = 'M' + lineWidthDivBy2 + ' ' +
+    (svgHeight - lineWidthDivBy2) +
+    ' L' +
+    (breatheDivByWidth * InhaleVal + lineWidthDivBy2) +
+    ' ' +
+    lineWidthDivBy2 +
+    ' L' +
+    breatheDivByWidth * (InhaleVal + Hold1Val) +
+    ' ' +
+    lineWidthDivBy2 +
+    ' L' +
+    breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal) +
+    ' ' +
+    (svgHeight - lineWidthDivBy2) +
+    ' ' +
+    'L' +
+    breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal + Hold2Val) +
+    ' ' +
+    (svgHeight - lineWidthDivBy2);
+  _el('#BreathePath').setAttribute("d", path);
+  curBreatheTime = 0;
+  
+  renderBreatheCircle();
+}
+
+/**
+ * load hrv chart
+ */
+function loadHRV() {
+  hrvChart = window.Highcharts.stockChart('hrvChart', {
+    title: {
+      text: 'Heart rate- דופק',
+      style: {
+        color: '#ffffff',
+      },
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      title: {
+        text: '',
+      },
+      gridLineColor: '#ffffff',
+    },
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    
+    tooltip: {
+      enabled: false,
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: [],
+        type: 'spline',
+        color: '#ff0000',
+      },
+    ],
+  });
+  
+  if (hrvBar != null) return;
+  hrvBar = window.Highcharts.chart('HeartRateBarGraph', {
+    title: {
+      text: '',
+    },
+    chart: {
+      type: 'column',
+      backgroundColor: 'rgba(0,0,0,0)',
+      animation: false,
+    },
+    xAxis: {
+      type: 'category',
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    yAxis: {
+      title: {
+        text: "",
+        style: {
+          color: '#ffffff',
+        },
+      },
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      gridLineColor: '#ffffff',
+    },
+    legend: {
+      enabled: false,
+    },
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        borderWidth: 0,
+        dataLabels: {
+          enabled: true,
+          format: '{point.y:.1f}',
+        },
+      },
+    },
+    
+    tooltip: {
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      pointFormat:
+        '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
+    },
+    
+    series: [
+      {
+        name: "",
+        colorByPoint: true,
+        data: [
+          {
+            name: 'VLF%',
+            y: 0,
+            color: '#7cb5ec',
+            pointWidth: 30,
+          },
+          {
+            name: 'LF%',
+            y: 0,
+            color: '#90ed7d',
+            pointWidth: 50,
+          },
+          {
+            name: 'HF%',
+            y: 0,
+            color: '#434348',
+            pointWidth: 30,
+          },
+        ],
+      },
+    ],
+  });
 }
 
 /**
  * load temp chart
  */
 function loadTemp() {
+  tempChart = window.Highcharts.stockChart('TempGraph', {
+    title: {
+      text: "",
+      style: {
+        color: '#ffffff',
+      },
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      title: {
+        text: '',
+      },
+      gridLineColor: '#FFF3',
+    },
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    
+    tooltip: {
+      enabled: false,
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        name: 'Celcius',
+        data: [],
+        type: 'spline',
+        color: '#ff0000',
+      },
+      {
+        name: 'Farenheit',
+        data: [],
+        visible: false,
+        color: '#ff8080',
+        type: 'spline',
+      },
+    ],
+  });
 }
 
 /**
  * load blood pressure chart
  */
 function loadBloodPressure() {
+  bloodPressureChart1_2 = window.Highcharts.stockChart('BloodPressureSubGraph2', {
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      title: {
+        text: '',
+      },
+      gridLineColor: '#FFF3',
+    },
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    
+    tooltip: {
+      enabled: false,
+      
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        name: 'Blood Pressure 2',
+        data: [],
+        color: {
+          linearGradient: {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1,
+          },
+          stops: [
+            [0, 'blue'],
+            [0.5, 'green'],
+            [1, 'red'],
+          ],
+        },
+      },
+    ],
+  });
+  
+  bloodPressureChart2 = window.Highcharts.stockChart('BloodPressureMainGraph', {
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    title: {
+      text: 'Blood preassure-לחץ דם',
+      style: {
+        color: '#ffffff',
+      },
+    },
+    yAxis: [
+      {
+        labels: {
+          style: {
+            color: '#FF0000',
+          },
+        },
+        title: {
+          text: '',
+        },
+        gridLineColor: '#FFF3',
+      },
+      {
+        labels: {
+          style: {
+            color: '#ffffff',
+          },
+        },
+        title: {
+          text: '',
+        },
+        gridLineColor: '#FFF3',
+      },
+    ],
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    tooltip: {
+      enabled: false,
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        name: 'Beats per minute',
+        color: "#ff0000",
+        data: [],
+        type: "spline",
+      },
+      {
+        name: 'Breaths per minute',
+        color: '#ffffff',
+        data: [],
+        yAxis: 1,
+        type: 'spline',
+      },
+    ],
+  });
+  
+  if (balanceBar != null) return;
+  balanceBar = window.Highcharts.chart('BloodPressureBarGraph', {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie',
+      backgroundColor: 'rgba(0,0,0,0)',
+      width: 100,
+      animation: false,
+      height: 200,
+    },
+    title: {
+      text: '%lf dominant',
+      style: {
+        color: '#ffffff',
+        fontSize: '14px',
+      },
+    },
+    series: [
+      {
+        name: 'Value',
+        colorByPoint: true,
+        animation: false,
+        
+        data: [
+          {
+            name: '%lf dominant',
+            y: 100.0,
+            color: "#90ed7d",
+          },
+          {
+            name: '',
+            y: 0,
+            color: 'transparent',
+          },
+        ],
+      },
+    ],
+  });
 }
 
 /**
  * Load multiple channel charts
  */
 function loadMultiChannel() {
+  multiArousalChart = window.Highcharts.chart('MultiChannelArousalChart', {
+    legend: {enabled: false},
+    title: {
+      text: 'Arousal',
+      style: {
+        color: '#ffffff',
+      },
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: "#FFF",
+        },
+      },
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      title: {
+        text: '',
+      },
+      gridLineColor: '#FFF3',
+    },
+    
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    
+    tooltip: {
+      enabled: false,
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: [],
+        color: '#a1c696',
+        marker: {
+          enabled: false,
+        },
+        type: 'spline',
+      },
+    ],
+  });
+  
+  multiTempChart = window.Highcharts.chart('MultiChannelTempChart', {
+    legend: {enabled: false},
+    title: {
+      text: 'Temperature',
+      style: {
+        color: '#ffffff',
+      },
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        },
+      },
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      title: {
+        text: '',
+      },
+      gridLineColor: '#FFF3',
+    },
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    tooltip: {
+      enabled: false,
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: [],
+        color: "#FFA500",
+        marker: {
+          enabled: false,
+        },
+        type: 'spline',
+      },
+    ],
+  });
+  
+  multiBeatChart = window.Highcharts.chart('MultiChannelBeatChart', {
+    title: {
+      text: 'Beat',
+      style: {
+        color: '#ffffff',
+      },
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%H:%M:%S}',
+        style: {
+          color: '#ffffff',
+        }
+      },
+    },
+    yAxis: {
+      labels: {
+        style: {
+          color: '#ffffff',
+        },
+      },
+      title: {
+        text: "",
+      },
+      lineColor: '#F00',
+      gridLineColor: '#FFF3',
+    },
+    plotOptions: {
+      series: {
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false,
+          },
+        },
+      },
+    },
+    
+    tooltip: {
+      enabled: false,
+      valueDecimals: 2,
+      shared: true,
+      headerFormat: 'Session_time: {point.x:%H:%M:%S}<br/>',
+    },
+    rangeSelector: {
+      enabled: false,
+    },
+    chart: {
+      panning: true,
+      alignTicks: false,
+      backgroundColor: 'rgba(0,0,0,0)',
+    },
+    legend: {enabled: false},
+    navigator: {
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    series: [
+      {
+        data: [],
+        color: '#ff0000',
+        marker: {
+          enabled: false,
+        },
+        type: 'spline',
+      },
+    ],
+  });
+}
 
+function calcBreatheTotalTime() {
+  const InhaleVal = parseFloat(_el('#InhaleVal').innerHTML);
+  const Hold1Val = parseFloat(_el('#Hold1Val').innerHTML);
+  const ExhaleVal = parseFloat(_el('#ExhaleVal').innerHTML);
+  const Hold2Val = parseFloat(_el('#Hold2Val').innerHTML);
+  curBreatheTotalTime = InhaleVal + Hold1Val + Hold2Val + ExhaleVal;
+  curMultiBreatheTime = InhaleVal + Hold1Val + Hold2Val + ExhaleVal;
 }
 
 /**
  * render multiple breathe path
  */
 function renderMultiBreathePath() {
+  calcBreatheTotalTime();
+  curMultiBreatheTotalTime = parseFloat(_el('#InhaleVal').innerHTML)
+    + parseFloat(_el('#Hold1Val').innerHTML)
+    + parseFloat(_el('#ExhaleVal').innerHTML)
+    + parseFloat(_el('#Hold2Val').innerHTML);
+  changeBreathePerMinute();
 }
 
 function renderMultiBreatheCircle() {
-}
-
-function renderBreatheCircle() {
+  const curBreatheCircle = _el('#multiChannelCurBreatheCircle');
+  const InhaleVal = parseFloat(_el('#MultiInhaleVal').innerHTML);
+  const Hold1Val = parseFloat(_el('#MultiHold1Val').innerHTML);
+  const ExhaleVal = parseFloat(_el('#MultiExhaleVal').innerHTML);
+  const Hold2Val = parseFloat(_el('#MultiHold2Val').innerHTML);
+  
+  const lineWidthDivBy2 = 10;
+  const svgHeight = 130;
+  
+  const svgWidth = _el('#multiChannelPacerGraph').getBoundingClientRect().width;
+  
+  const breatheDivByWidth =
+    (svgWidth - lineWidthDivBy2 * 2) / curMultiBreatheTotalTime;
+  
+  if (curMultiBreatheTime < InhaleVal) {
+    curBreatheCircle.setAttribute('cx', lineWidthDivBy2 + curMultiBreatheTime * breatheDivByWidth);
+    curBreatheCircle.setAttribute('cy', lineWidthDivBy2 + (1 - curMultiBreatheTime / InhaleVal) * (svgHeight - lineWidthDivBy2 * 2));
+  } else if (curMultiBreatheTime < InhaleVal + Hold1Val) {
+    curBreatheCircle.setAttribute('cx', lineWidthDivBy2 + breatheDivByWidth * InhaleVal + (curMultiBreatheTime - InhaleVal) * breatheDivByWidth);
+    curBreatheCircle.setAttribute('cy', lineWidthDivBy2);
+  } else if (curMultiBreatheTime < InhaleVal + Hold1Val + ExhaleVal) {
+    curBreatheCircle.setAttribute('cx', breatheDivByWidth * (InhaleVal + Hold1Val) + (curMultiBreatheTime - InhaleVal - Hold1Val) * breatheDivByWidth);
+    curBreatheCircle.setAttribute('cy', lineWidthDivBy2 + ((curMultiBreatheTime - InhaleVal - Hold1Val) / ExhaleVal) * (svgHeight - lineWidthDivBy2 * 2));
+  } else {
+    curBreatheCircle.setAttribute('cx', breatheDivByWidth * (InhaleVal + Hold1Val + ExhaleVal) +
+      (curMultiBreatheTime - InhaleVal - ExhaleVal - Hold1Val) *
+      breatheDivByWidth
+    );
+    curBreatheCircle.setAttribute('cy', svgHeight - lineWidthDivBy2);
+  }
 }
 
 function expand(e) {
