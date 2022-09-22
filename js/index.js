@@ -123,20 +123,25 @@ window.addEventListener("DOMContentLoaded", function () {
     secondVideo.muted = false;
   });
   
+  var requestIframe = null;
   iframeReloadInterval = setInterval(() => {
     if (iframeLoaded === false) {
-      document.querySelector("iframe").src = "abc";
-      requestAnimationFrame(() => {
+      // document.querySelector("iframe").src = "http://localhost";
+      requestIframe = requestAnimationFrame(() => {
         document.querySelector("iframe").src = "http://localhost:8080";
       });
     } else {
+      if (requestIframe) {
+        cancelAnimationFrame(requestIframe);
+      }
+      
       clearInterval(iframeReloadInterval);
     }
   }, 1000);
   
   var showAllGraphs = document.querySelector("#showAllGraphs");
   showAllGraphs.addEventListener("click", function () {
-    let index = 4;
+    let index = 3;
     curPage = index;
     document.querySelector("[data-pageindex='" + index + "']").style.display =
       "block";
@@ -152,9 +157,15 @@ window.addEventListener("DOMContentLoaded", function () {
       if (!document.querySelector(".Page").classList.contains("hidden")) {
         document.querySelector(".Page").classList += " hidden";
       }
-      if (index === 4) {
-        curActive = 4;
-        time = 0;
+      if (index === 3) {
+        curActive = 3;
+        time = 5000;
+        aTime = 0;
+        bTime = 0;
+        cTime = 0;
+        prevAVal = 0;
+        prevBVal = 0;
+        prevCVal = 0;
         loadMultiChannel();
         renderMultiBreathePath();
       }
@@ -189,9 +200,12 @@ window.addEventListener("DOMContentLoaded", function () {
               curActive = 0;
               time = 0;
               loadArousal();
-            } else if (index === 4) {
-              curActive = 4;
+            } else if (index === 3) {
+              curActive = 3;
               time = 0;
+              aTime = 0;
+              bTime = 0;
+              cTime = 0;
               loadMultiChannel();
               renderMultiBreathePath();
             } else if (index === 1) {
@@ -203,10 +217,10 @@ window.addEventListener("DOMContentLoaded", function () {
             } else if (index === 2) {
               curActive = 2;
               time = 0;
-              
+    
               loadTemp();
-            } else if (index === 3) {
-              curActive = 3;
+            } else if (index === 4) {
+              curActive = 4;
               time = 0;
               multi_lf_dominantCount = 0;
               balance_lf_dominantCount = 0;
@@ -604,6 +618,12 @@ window.addEventListener("DOMContentLoaded", function () {
 var isCelsius = true;
 var initArousal = null;
 var time = 0;
+var aTime = 0;
+var bTime = 0;
+var cTime = 0;
+var prevAVal = 0;
+var prevBVal = 0;
+var prevCVal = 0;
 var breatheData = [];
 var itemsCount = 1500;
 var arousalVideo = document.querySelector("#arousalVideo");
@@ -663,13 +683,13 @@ var multiChannelBatteryGraph = document.querySelector("#multiChannelBatteryGraph
 
 function handleMessage(msg) {
   if (curActive === -1) return;
-  data = JSON.parse(msg.data);
-  if (data.values[0].hr == null) {
-    if (lastHandled) {
-      lastHandled = false;
-      return;
-    }
-  }
+  let data = JSON.parse(msg.data);
+  // if (data.values[0].hr == null) {
+  //   if (lastHandled) {
+  //     lastHandled = false;
+  //     // return;
+  //   }
+  // }
   
   lastHandled = true;
   iframeLoaded = true;
@@ -763,7 +783,7 @@ function handleMessage(msg) {
         }, 500);
       }
       mentalRelaxationPoint.innerHTML = mentalRelaxationRewardPoint;
-      time += 100;
+      time += 200;
     }
   } else if (curActive === 1) {
     if (!HeartRateRunning) return;
@@ -773,8 +793,8 @@ function handleMessage(msg) {
       if (hrvChart.series[0].data.length >= itemsCount)
         hrvChart.series[0].addPoint([time, val], true, true);
       else hrvChart.series[0].addPoint([time, val], true, false);
-      
-      time += 1000;
+  
+      time += 200;
       
       if (initHr == null) initHr = val;
       if (HeartRateBody2.getBoundingClientRect().width !== 0) {
@@ -945,9 +965,9 @@ function handleMessage(msg) {
         previousTemperatureValue = val;
       }
       var temporaryTemperatureValue = val;
-      time += 1000;
+      time += 200;
     }
-  } else if (curActive === 3) {
+  } else if (curActive === 4) {
     if (!BreatheRunning) return;
     if (data.values[ind].hr != null) {
       var val = parseInt(data.values[ind].hr);
@@ -1007,8 +1027,8 @@ function handleMessage(msg) {
       if (bloodPressureChart1_2.series[0].data.length >= itemsCount)
         bloodPressureChart1_2.series[0].addPoint([time, val], true, true);
       else bloodPressureChart1_2.series[0].addPoint([time, val], true, false);
-      
-      time += 1000;
+  
+      time += 200;
     }
     
     var vlf = parseFloat(data.values[ind].v_p_p_e);
@@ -1071,27 +1091,60 @@ function handleMessage(msg) {
           300000
         ).toFixed(2);
     }
-  } else if (curActive === 4) {
+  } else if (curActive === 3) {
     if (data.values[ind].tmp != null) {
       var val = parseInt(data.values[ind].tmp);
       multiTempValue.innerHTML = (val / 100).toFixed(1);
-      if (multiTempChart.series[0].data.length >= itemsCount)
-        multiTempChart.series[0].addPoint([time, val / 100], true, true);
-      else multiTempChart.series[0].addPoint([time, val / 100], true, false);
+      const insVal = val / 100;
+      if (prevAVal === 0) prevAVal = insVal;
+      for (let mT = 1; mT < 10; mT ++) {
+        let pVal = 0;
+        if (insVal < prevAVal) {
+          pVal = insVal + ((prevAVal - insVal) / 10) * mT;
+        } else {
+          pVal = prevAVal + ((insVal - prevAVal) / 10) * mT;
+        }
+        if (multiTempChart.series[0].data.length >= itemsCount)
+          multiTempChart.series[0].addPoint([aTime, pVal], true, true);
+        else multiTempChart.series[0].addPoint([aTime, pVal], true, false);
+      }
+      prevAVal = insVal;
     }
     if (data.values[ind].gs != null) {
       var val = parseInt(data.values[ind].gs);
       arousalValue.innerHTML = (val / 100).toFixed(1);
-      if (multiArousalChart.series[0].data.length >= itemsCount)
-        multiArousalChart.series[0].addPoint([time, val / 100], true, true);
-      else multiArousalChart.series[0].addPoint([time, val / 100], true, false);
+      const insVal = val / 100;
+      if (prevBVal === 0) prevBVal = insVal;
+      for (let mT = 1; mT < 10; mT ++) {
+        let pVal = 0;
+        if (insVal < prevBVal) {
+          pVal = insVal + ((prevBVal - insVal) / 10) * mT;
+        } else {
+          pVal = prevBVal + ((insVal - prevBVal) / 10) * mT;
+        }
+        if (multiArousalChart.series[0].data.length >= itemsCount)
+          multiArousalChart.series[0].addPoint([bTime, pVal], true, true);
+        else multiArousalChart.series[0].addPoint([bTime, pVal], true, false);
+      }
+      prevBVal = insVal;
     }
     if (data.values[ind].hr != null) {
       var val = parseInt(data.values[ind].hr) * 100;
       beatValue.innerHTML = (val / 100).toFixed(1);
-      if (multiBeatChart.series[0].data.length >= itemsCount)
-        multiBeatChart.series[0].addPoint([time, val / 100], true, true);
-      else multiBeatChart.series[0].addPoint([time, val / 100], true, false);
+      const insVal = val / 100;
+      if (prevCVal === 0) prevCVal = insVal;
+      for (let mT = 1; mT < 10; mT ++) {
+        let pVal = 0;
+        if (insVal < prevCVal) {
+          pVal = insVal + ((prevCVal - insVal) / 10) * mT;
+        } else {
+          pVal = prevCVal + ((insVal - prevCVal) / 10) * mT;
+        }
+        if (multiBeatChart.series[0].data.length >= itemsCount)
+          multiBeatChart.series[0].addPoint([cTime, pVal], true, true);
+        else multiBeatChart.series[0].addPoint([cTime, pVal], true, false);
+      }
+      prevCVal = insVal;
     }
     var vlf = parseFloat(data.values[ind].v_p_p_e);
     var lf = parseFloat(data.values[ind].l_p_p_e);
@@ -1115,7 +1168,10 @@ function handleMessage(msg) {
     //   false
     // );
     multiChannelBarGraphValue.innerHTML = lfdominant.toFixed(1);
-    time += 1000;
+    time += 200;
+    aTime += 200;
+    bTime += 200;
+    cTime += 200;
   }
 }
 
@@ -2030,7 +2086,7 @@ function loadMultiChannel() {
         format: "{value:%H:%M:%S}",
         style: {
           color: "#ffffff",
-        },
+        }
       },
     },
     yAxis: {
@@ -2192,7 +2248,7 @@ function goback() {
       '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
       "*"
     );
-  } else if (curPage === 3) {
+  } else if (curPage === 4) {
     clearInterval(bloodPressureInterval1);
     clearInterval(bloodPressureInterval2);
     document
@@ -2209,7 +2265,7 @@ function goback() {
       '{"event":"command","func":"' + "pauseVideo" + '","args":""}',
       "*"
     );
-  } else if (curPage === 4) {
+  } else if (curPage === 3) {
   }
 }
 
@@ -2241,17 +2297,16 @@ const quantile = (sorted, q) => {
 function expand(e) {
   e.style.display = "none";
   e.parentNode.children[1].style.display = "block";
-  document.querySelector(".multiChannelbreathsCont").style.display = "none";
-  var nodes = e.parentNode.parentNode.parentNode.children;
-  for (var i = 0; i < nodes.length; i++) {
+  document.querySelector(".multiChannelBreathsCont").style.display = "none";
+  const nodes = e.parentNode.parentNode.parentNode.children;
+  for (let i = 0; i < nodes.length; i++) {
     if (nodes[i] !== e.parentNode.parentNode) {
       nodes[i].style.display = "none";
     }
   }
-  var parent = e.parentNode.parentNode.querySelector(".graphCont");
-  if (
-    e.parentNode.parentNode.querySelector("#MultiChannelArousalChart") != null
-  ) {
+  
+  const parent = e.parentNode.parentNode.querySelector('.graphCont');
+  if (e.parentNode.parentNode.querySelector("#MultiChannelArousalChart") != null) {
     if (multiArousalChart != null)
       multiArousalChart.setSize(
         parent.getBoundingClientRect().width,
@@ -2282,7 +2337,7 @@ function expand(e) {
 function shrink(e) {
   e.style.display = "none";
   e.parentNode.children[0].style.display = "block";
-  document.querySelector(".multiChannelbreathsCont").style.display = "block";
+  document.querySelector(".multiChannelBreathsCont").style.display = "block";
   var nodes = e.parentNode.parentNode.parentNode.children;
   for (var i = 0; i < nodes.length; i++) {
     nodes[i].style.display = "flex";

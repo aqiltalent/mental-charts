@@ -1692,11 +1692,11 @@ h3 {
   }
 }
 
-.multichannelCont .multiChannelbreathsCont {
+.multichannelCont .multiChannelBreathsCont {
   margin: auto;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons {
+.multichannelCont .multiChannelBreathsCont .pacerButtons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1709,7 +1709,7 @@ h3 {
           align-items: center;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .HeartPacerSlider {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1721,7 +1721,7 @@ h3 {
   width: calc(100% - 40px);
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .SliderText {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .HeartPacerSlider .SliderText {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1733,14 +1733,14 @@ h3 {
   margin: 0px 10px;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .MainSlider {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .HeartPacerSlider .MainSlider {
   margin: 10px 0px;
   height: 20px;
   padding: 0 5px;
   position: relative;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .MainSlider .SliderCircle {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .HeartPacerSlider .MainSlider .SliderCircle {
   position: absolute;
   left: 50%;
   width: 20px;
@@ -1751,7 +1751,7 @@ h3 {
   transition: 0.25s ease;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .MainSlider .SliderBar {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .HeartPacerSlider .MainSlider .SliderBar {
   margin: 5px 10px;
   border-radius: 5px;
   width: 100%;
@@ -1760,13 +1760,13 @@ h3 {
   background-image: linear-gradient(to right, red, blue, green);
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .HeartPacerSlider .SliderPercent {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .HeartPacerSlider .SliderPercent {
   width: 100%;
   text-align: center;
   color: white;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -1780,7 +1780,7 @@ h3 {
   max-width: 100px;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf .multiBatteryCont {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -1789,12 +1789,12 @@ h3 {
           justify-content: center;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multiText {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf .multiBatteryCont .multiText {
   color: #ffffff;
   text-align: center;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multi-battery-head {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf .multiBatteryCont .multi-battery-head {
   width: 30px;
   height: 10px;
   background: #4fa2d2;
@@ -1804,7 +1804,7 @@ h3 {
   border-top-left-radius: 8px;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multi-battery-body {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf .multiBatteryCont .multi-battery-body {
   width: 100px;
   height: 200px;
   background: #4fa2d2;
@@ -1814,7 +1814,7 @@ h3 {
   border-radius: 18px;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont i.fa-bolt {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf .multiBatteryCont i.fa-bolt {
   color: white;
   font-size: 40px;
   position: absolute;
@@ -1825,7 +1825,7 @@ h3 {
           animation: battery-bolt 2s linear infinite;
 }
 
-.multichannelCont .multiChannelbreathsCont .pacerButtons .multilf .multiBatteryCont .multi-charge {
+.multichannelCont .multiChannelBreathsCont .pacerButtons .multiLf .multiBatteryCont .multi-charge {
   width: 100%;
   position: absolute;
   bottom: 0;

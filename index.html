@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/all.min.css">
 	<title>Dr. Yuval Odeds’ MentalGym</title>
-	<script type="text/javascript" src="js/Tone.js"></script>
+<!--	<script type="text/javascript" src="js/Tone.js"></script>-->
 </head>
 
 <body>
@@ -135,7 +135,7 @@
 						<div class="dropdownAudio" data-src="audio/5.mp3">סריקת גוף</div>
 					</div>
 				</div>
-				<audio class="Audio"></audio>
+				<audio class="Audio" autoplay muted></audio>
 				<div class="arousalSinglebutton" id="arousalMinimizeAnimationBtn">
 					<div class="icon"><i class="fas fa-video-slash"></i>
 					</div>
@@ -251,7 +251,7 @@
 						<div class="dropdownAudio" data-src="audio/5.mp3">סריקת גוף</div>
 					</div>
 				</div>
-				<audio class="Audio"></audio>
+				<audio class="Audio" autoplay muted></audio>
 				<div class="arousalSinglebutton" id="HeartRateShowAnimationBtn">
 					<div class="icon"><i class="fas fa-video"></i>
 					</div>
@@ -467,7 +467,7 @@
 							<div class="dropdownAudio" data-src="audio/5.mp3">סריקת גוף</div>
 						</div>
 					</div>
-					<audio class="Audio"></audio>
+					<audio class="Audio" autoplay muted></audio>
 					<div class="arousalSinglebutton" id="TempShowAnimationBtn">
 						<div class="icon"><i class="fas fa-video"></i>
 						</div>
@@ -537,6 +537,114 @@
 	</div>
 
 </div>
+<div class="ContentPage" data-pageindex="3">
+	<img class="backgroundLogo" src="img/logo.png" alt="">
+	
+	<div class="multichannelCont">
+		<div class="backButton"><i class="fas fa-arrow-left"></i></div>
+		
+		<div class="multichannelGraphCont">
+			<div class="multichannelGraphSingleCont">
+				<div class="iconCont">
+					<div class="icon"><img src="img/droplet.svg" alt=""></div>
+					<div class="value drop" id="multiArousalValue"></div>
+				</div>
+				<div class="graphCont">
+					<div id="MultiChannelArousalChart"></div>
+				</div>
+				<div class="svgConts">
+					<svg class="expander" onclick="expand(this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+						<path
+								d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"/>
+					</svg>
+					<svg class="shrinker" onclick="shrink(this)" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="289.459 427.465 18 18" width="18pt" height="18pt">
+						<g>
+							<path
+									d=" M 291.459 427.465 C 290.365 427.465 289.459 428.371 289.459 429.465 L 289.459 443.465 C 289.459 444.558 290.365 445.465 291.459 445.465 L 305.459 445.465 C 306.552 445.465 307.459 444.558 307.459 443.465 L 307.459 431.938 L 305.459 431.938 L 305.459 443.465 L 291.459 443.465 L 291.459 429.465 L 302.782 429.465 L 302.782 427.465 L 291.459 427.465 Z "/>
+							<path
+									d=" M 301.713 440.157 L 301.719 438.157 L 298.134 438.144 L 307.459 428.883 L 306.049 427.465 L 296.724 436.725 L 296.737 433.139 L 294.737 433.133 L 294.713 440.132 L 301.713 440.157 Z "/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<div class="multichannelGraphSingleCont">
+				<div class="iconCont">
+					<div class="icon">
+						<i class="fas fa-thermometer-three-quarters"></i>
+					</div>
+					<div class="value temp" id="MultiTempVal"></div>
+				</div>
+				<div class="graphCont">
+					<div id="MultiChannelTempChart"></div>
+				
+				</div>
+				<div class="svgConts">
+					<svg class="expander" onclick="expand(this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+						<path
+								d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"/>
+					</svg>
+					<svg class="shrinker" onclick="shrink(this)" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="289.459 427.465 18 18" width="18pt" height="18pt">
+						<g>
+							<path
+									d=" M 291.459 427.465 C 290.365 427.465 289.459 428.371 289.459 429.465 L 289.459 443.465 C 289.459 444.558 290.365 445.465 291.459 445.465 L 305.459 445.465 C 306.552 445.465 307.459 444.558 307.459 443.465 L 307.459 431.938 L 305.459 431.938 L 305.459 443.465 L 291.459 443.465 L 291.459 429.465 L 302.782 429.465 L 302.782 427.465 L 291.459 427.465 Z "/>
+							<path
+									d=" M 301.713 440.157 L 301.719 438.157 L 298.134 438.144 L 307.459 428.883 L 306.049 427.465 L 296.724 436.725 L 296.737 433.139 L 294.737 433.133 L 294.713 440.132 L 301.713 440.157 Z "/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<div class="multichannelGraphSingleCont">
+				<div class="iconCont">
+					<div class="icon">
+						<div class="iconCont"><i class="fas fa-heart"></i></div>
+					
+					</div>
+					<div class="value heart" id="MultiBeatValue"></div>
+				</div>
+				<div class="graphCont">
+					<div id="MultiChannelBeatChart"></div>
+				
+				</div>
+				<div class="svgConts">
+					<svg class="expander" onclick="expand(this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+						<path
+								d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"/>
+					</svg>
+					<svg class="shrinker" onclick="shrink(this)" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="289.459 427.465 18 18" width="18pt"
+							 height="18pt">
+						<g>
+							<path
+									d=" M 291.459 427.465 C 290.365 427.465 289.459 428.371 289.459 429.465 L 289.459 443.465 C 289.459 444.558 290.365 445.465 291.459 445.465 L 305.459 445.465 C 306.552 445.465 307.459 444.558 307.459 443.465 L 307.459 431.938 L 305.459 431.938 L 305.459 443.465 L 291.459 443.465 L 291.459 429.465 L 302.782 429.465 L 302.782 427.465 L 291.459 427.465 Z "/>
+							<path
+									d=" M 301.713 440.157 L 301.719 438.157 L 298.134 438.144 L 307.459 428.883 L 306.049 427.465 L 296.724 436.725 L 296.737 433.139 L 294.737 433.133 L 294.713 440.132 L 301.713 440.157 Z "/>
+						</g>
+					</svg>
+				</div>
+			</div>
+		</div>
+		<div class="multiChannelBreathsCont">
+			<div class="pacerButtons">
+				<div class="multiLf">
+					<div class="multiBatteryCont">
+						<div class="multiText">%lf dominant</div>
+						<div class="multiBattery">
+							<div class="multi-battery-head"></div>
+							<div class="multi-battery-body">
+								<div class="multi-charge" id="multiChannelBatteryGraph"></div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="multiChannelBarGraphValue"></div>
+				</div>
+				<div class="HeartPacerSlider">
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+
 <div class="ContentPage" data-pageindex="4">
 	<img class="backgroundLogo" src="img/logo.png" alt="">
 	
@@ -582,7 +690,6 @@
 				<div class="arousalSinglebutton AddAudioBtn">
 					<div class="icon"><i class="fas fa-file-audio"></i>
 						<input type="file" class="AudioFile" accept="audio/*">
-					
 					</div>
 					<div class="text">
 						Instruction -
@@ -602,7 +709,7 @@
 						<div class="dropdownAudio" data-src="audio/5.mp3">סריקת גוף</div>
 					</div>
 				</div>
-				<audio class="Audio"></audio>
+				<audio class="Audio" autoplay muted></audio>
 				<div class="arousalSinglebutton" id="BalanceShowAnimationBtn">
 					<div class="icon"><i class="fas fa-video"></i>
 					</div>
@@ -702,119 +809,12 @@
 	</div>
 
 </div>
-<div class="ContentPage" data-pageindex="3">
-	<img class="backgroundLogo" src="img/logo.png" alt="">
-	
-	<div class="multichannelCont">
-		<div class="backButton"><i class="fas fa-arrow-left"></i></div>
-		
-		<div class="multichannelGraphCont">
-			<div class="multichannelGraphSingleCont">
-				<div class="iconCont">
-					<div class="icon"><img src="img/droplet.svg" alt=""></div>
-					<div class="value drop" id="multiArousalValue"></div>
-				</div>
-				<div class="graphCont">
-					<div id="MultiChannelArousalChart"></div>
-				</div>
-				<div class="svgConts">
-					<svg class="expander" onclick="expand(this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-						<path
-								d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"/>
-					</svg>
-					<svg class="shrinker" onclick="shrink(this)" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="289.459 427.465 18 18" width="18pt" height="18pt">
-						<g>
-							<path
-									d=" M 291.459 427.465 C 290.365 427.465 289.459 428.371 289.459 429.465 L 289.459 443.465 C 289.459 444.558 290.365 445.465 291.459 445.465 L 305.459 445.465 C 306.552 445.465 307.459 444.558 307.459 443.465 L 307.459 431.938 L 305.459 431.938 L 305.459 443.465 L 291.459 443.465 L 291.459 429.465 L 302.782 429.465 L 302.782 427.465 L 291.459 427.465 Z "/>
-							<path
-									d=" M 301.713 440.157 L 301.719 438.157 L 298.134 438.144 L 307.459 428.883 L 306.049 427.465 L 296.724 436.725 L 296.737 433.139 L 294.737 433.133 L 294.713 440.132 L 301.713 440.157 Z "/>
-						</g>
-					</svg>
-				</div>
-			</div>
-			<div class="multichannelGraphSingleCont">
-				<div class="iconCont">
-					<div class="icon">
-						<i class="fas fa-thermometer-three-quarters"></i>
-					</div>
-					<div class="value temp" id="MultiTempVal"></div>
-				</div>
-				<div class="graphCont">
-					<div id="MultiChannelTempChart"></div>
-				
-				</div>
-				<div class="svgConts">
-					<svg class="expander" onclick="expand(this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-						<path
-								d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"/>
-					</svg>
-					<svg class="shrinker" onclick="shrink(this)" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="289.459 427.465 18 18" width="18pt" height="18pt">
-						<g>
-							<path
-									d=" M 291.459 427.465 C 290.365 427.465 289.459 428.371 289.459 429.465 L 289.459 443.465 C 289.459 444.558 290.365 445.465 291.459 445.465 L 305.459 445.465 C 306.552 445.465 307.459 444.558 307.459 443.465 L 307.459 431.938 L 305.459 431.938 L 305.459 443.465 L 291.459 443.465 L 291.459 429.465 L 302.782 429.465 L 302.782 427.465 L 291.459 427.465 Z "/>
-							<path
-									d=" M 301.713 440.157 L 301.719 438.157 L 298.134 438.144 L 307.459 428.883 L 306.049 427.465 L 296.724 436.725 L 296.737 433.139 L 294.737 433.133 L 294.713 440.132 L 301.713 440.157 Z "/>
-						</g>
-					</svg>
-				</div>
-			</div>
-			<div class="multichannelGraphSingleCont">
-				<div class="iconCont">
-					<div class="icon">
-						<div class="iconCont"><i class="fas fa-heart"></i></div>
-					
-					</div>
-					<div class="value heart" id="MultiBeatValue"></div>
-				</div>
-				<div class="graphCont">
-					<div id="MultiChannelBeatChart"></div>
-				
-				</div>
-				<div class="svgConts">
-					<svg class="expander" onclick="expand(this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-						<path
-								d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"/>
-					</svg>
-					<svg class="shrinker" onclick="shrink(this)" xmlns="http://www.w3.org/2000/svg" style="isolation:isolate" viewBox="289.459 427.465 18 18" width="18pt"
-							 height="18pt">
-						<g>
-							<path
-									d=" M 291.459 427.465 C 290.365 427.465 289.459 428.371 289.459 429.465 L 289.459 443.465 C 289.459 444.558 290.365 445.465 291.459 445.465 L 305.459 445.465 C 306.552 445.465 307.459 444.558 307.459 443.465 L 307.459 431.938 L 305.459 431.938 L 305.459 443.465 L 291.459 443.465 L 291.459 429.465 L 302.782 429.465 L 302.782 427.465 L 291.459 427.465 Z "/>
-							<path
-									d=" M 301.713 440.157 L 301.719 438.157 L 298.134 438.144 L 307.459 428.883 L 306.049 427.465 L 296.724 436.725 L 296.737 433.139 L 294.737 433.133 L 294.713 440.132 L 301.713 440.157 Z "/>
-						</g>
-					</svg>
-				</div>
-			</div>
-		</div>
-		<div class="multiChannelbreathsCont">
-			<div class="pacerButtons">
-				<div class="multilf">
-					<div class="multiBatteryCont">
-						<div class="multiText">%lf dominant</div>
-						<div class="multiBattery">
-							<div class="multi-battery-head"></div>
-							<div class="multi-battery-body">
-								<div class="multi-charge" id="multiChannelBatteryGraph"></div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="multiChannelBarGraphValue"></div>
-				</div>
-				<div class="HeartPacerSlider">
-				</div>
-			</div>
-		
-		</div>
-	</div>
-</div>
 
 <script src="js/highstock.min.js"></script>
 <script src="js/data.min.js"></script>
 <script src="js/exporting.min.js"></script>
 <script src="js/export-data.min.js"></script>
 <script src="js/classes.js"></script>
-<script src="js/index.js"></script>
+<script src="js/mental-gym.js"></script>
 </body>
 </html>

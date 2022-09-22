@@ -54,7 +54,7 @@ class GuidedClass {
             StopGuidedButton.style.display = "flex";
             GuidedButton.style.display = "none";
             if (lang === "English") {
-                HerbrewEnglishAudio.play();
+                HerbrewEnglishAudio.play().then(r => {});
                 playing = true;
             } else if (lang === "Herbrew") {
                 HerbrewAudio.play().then(r => {});
@@ -154,6 +154,7 @@ class audioClass {
         const arousalPauseBtn = div.querySelector(".PauseBtn");
         const arousalStopBtn = div.querySelector(".StopBtn");
         const arousalPlayBtn = div.querySelector(".PlayBtn");
+        arousalAudio.muted = false;
         arousalAudioFile.addEventListener("change", () => {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -163,9 +164,12 @@ class audioClass {
             arousalPlayBtn.style.display = "block";
             arousalStopBtn.style.display = "block";
             arousalAddAudioBtn.style.display = "none";
+            arousalPlayBtn.click();
         })
         arousalPlayBtn.addEventListener("click", () => {
-            arousalAudio.play();
+            arousalAudio.play().then(() => {
+                arousalAudio.muted = false;
+            });
             arousalPlayBtn.style.display = "none";
             arousalPauseBtn.style.display = "block";
             arousalStopBtn.style.display = "block";
